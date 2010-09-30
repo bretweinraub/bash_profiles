@@ -1,0 +1,156 @@
+bdw.dba(2)@scooby:(/sql)/home/bdw/sql/etl-> 
+bdw.dba(2)@scooby:(/sql)/home/bdw/sql/etl-> 
+bdw.dba(2)@scooby:(/sql)/home/bdw/sql/etl-> 
+bdw.dba(2)@scooby:(/sql)/home/bdw/sql/etl-> 
+bdw.dba(2)@scooby:(/sql)/home/bdw/sql/etl-> 
+bdw.dba(2)@scooby:(/sql)/home/bdw/sql/etl-> sc tr@proddw1int
+bdw.dba(2)@scooby:(tr@proddw1int/sql)/home/bdw/sql/etl-> s
+
+SQL*Plus: Release 8.1.5.0.0 - Production on Thu May 4 16:56:53 2000
+
+(c) Copyright 1999 Oracle Corporation.  All rights reserved.
+
+Enter password: dbug
+
+
+Connected to:
+Oracle8i Enterprise Edition Release 8.1.5.0.0 - Production
+With the Partitioning and Java options
+PL/SQL Release 8.1.5.0.0 - Production
+
+SQL> @recoverEtl_4229
+Enter value for etl_id: 4229
+old   1: delete /*+ PARALLEL(DW_COMMERCELINK_FACT,8) */ from DW_COMMERCELINK_FACT where created_etl_id = &&etl_id
+new   1: delete /*+ PARALLEL(DW_COMMERCELINK_FACT,8) */ from DW_COMMERCELINK_FACT where created_etl_id = 4229
+
+31884 rows deleted.
+
+Elapsed: 00:01:54.00
+
+Commit complete.
+
+Elapsed: 00:00:04.85
+old   1: delete /*+ PARALLEL(DW_PARTNER_CONTRACT,8) */ from DW_PARTNER_CONTRACT  where		CREATED_ETL_ID = &&etl_id
+new   1: delete /*+ PARALLEL(DW_PARTNER_CONTRACT,8) */ from DW_PARTNER_CONTRACT  where		CREATED_ETL_ID = 4229
+
+0 rows deleted.
+
+Elapsed: 00:00:14.70
+
+Commit complete.
+
+Elapsed: 00:00:00.03
+old   1: delete /*+ PARALLEL(DW_PARTNER_CONTRACT_OPTION,8) */ from DW_PARTNER_CONTRACT_OPTION  where   CREATED_ETL_ID = &&etl_id
+new   1: delete /*+ PARALLEL(DW_PARTNER_CONTRACT_OPTION,8) */ from DW_PARTNER_CONTRACT_OPTION  where   CREATED_ETL_ID = 4229
+
+0 rows deleted.
+
+Elapsed: 00:00:00.35
+
+Commit complete.
+
+Elapsed: 00:00:00.01
+old   1: delete /*+ PARALLEL(DW_PARTNER_CONTRACT_REPORT,8) */ from DW_PARTNER_CONTRACT_REPORT  where   CREATED_ETL_ID = &&etl_id
+new   1: delete /*+ PARALLEL(DW_PARTNER_CONTRACT_REPORT,8) */ from DW_PARTNER_CONTRACT_REPORT  where   CREATED_ETL_ID = 4229
+
+0 rows deleted.
+
+Elapsed: 00:00:00.23
+
+Commit complete.
+
+Elapsed: 00:00:00.01
+old   1: delete /*+ PARALLEL(DW_STORE_CATEGORY,8) */ from DW_STORE_CATEGORY  where	      ETL_ID = &&etl_id
+new   1: delete /*+ PARALLEL(DW_STORE_CATEGORY,8) */ from DW_STORE_CATEGORY  where	      ETL_ID = 4229
+
+9731 rows deleted.
+
+Elapsed: 00:07:07.52
+
+Commit complete.
+
+Elapsed: 00:00:07.34
+old   1: delete /*+ PARALLEL(DW_STORE_CATEGORY_DATE_SUM,8) */ from DW_STORE_CATEGORY_DATE_SUM  where   ETL_ID = &&etl_id
+new   1: delete /*+ PARALLEL(DW_STORE_CATEGORY_DATE_SUM,8) */ from DW_STORE_CATEGORY_DATE_SUM  where   ETL_ID = 4229
+
+0 rows deleted.
+
+Elapsed: 00:00:19.70
+
+Commit complete.
+
+Elapsed: 00:00:00.02
+old   1: delete /*+ PARALLEL(DW_STORE_CLICKSTREAM_FACT,8) */ from DW_STORE_CLICKSTREAM_FACT  where    CREATED_ETL_ID = &&etl_id
+new   1: delete /*+ PARALLEL(DW_STORE_CLICKSTREAM_FACT,8) */ from DW_STORE_CLICKSTREAM_FACT  where    CREATED_ETL_ID = 4229
+delete /*+ PARALLEL(DW_STORE_CLICKSTREAM_FACT,8) */ from DW_STORE_CLICKSTREAM_FACT  where    CREATED_ETL_ID = 4229
+                                                                                                              *
+ERROR at line 1:
+ORA-01013: user requested cancel of current operation
+
+
+Elapsed: 00:01:34.02
+
+SQL> @recoverEtl_4229.2
+SP2-0310: unable to open file "recoverEtl_4229.2"
+SQL> @recoverEtl_4229_2
+old   1: delete /*+ PARALLEL(DW_STORE_CLICKSTREAM_FACT,8) */ from DW_STORE_CLICKSTREAM_FACT  where    CREATED_ETL_ID = &&etl_id
+new   1: delete /*+ PARALLEL(DW_STORE_CLICKSTREAM_FACT,8) */ from DW_STORE_CLICKSTREAM_FACT  where    CREATED_ETL_ID = 4229
+
+36800 rows deleted.
+
+Elapsed: 00:15:51.50
+
+Commit complete.
+
+Elapsed: 00:00:15.83
+old   1: delete /*+ PARALLEL(DW_TEASER_PRODUCT_FACT,8) */ from DW_TEASER_PRODUCT_FACT  where	   CREATED_ETL_ID = &&etl_id
+new   1: delete /*+ PARALLEL(DW_TEASER_PRODUCT_FACT,8) */ from DW_TEASER_PRODUCT_FACT  where	   CREATED_ETL_ID = 4229
+
+42576 rows deleted.
+
+Elapsed: 00:05:54.07
+
+Commit complete.
+
+Elapsed: 00:00:05.28
+old   6: 		WHERE	created_etl_id=&&etl_id
+new   6: 		WHERE	created_etl_id=4229
+
+22 rows updated.
+
+Elapsed: 00:04:02.89
+
+Commit complete.
+
+Elapsed: 00:00:00.43
+old   6: 		WHERE	created_etl_id=&&etl_id
+new   6: 		WHERE	created_etl_id=4229
+
+3 rows updated.
+
+Elapsed: 00:03:36.67
+
+Commit complete.
+
+Elapsed: 00:00:00.30
+old   6: 		WHERE	created_etl_id=&&etl_id
+new   6: 		WHERE	created_etl_id=4229
+
+0 rows updated.
+
+Elapsed: 00:04:13.39
+
+Commit complete.
+
+Elapsed: 00:00:00.30
+old   1: delete /*+ PARALLEL(DW_PAY,8) */  from DW_PAY	where			    CREATED_ETL_ID = &&etl_id
+new   1: delete /*+ PARALLEL(DW_PAY,8) */  from DW_PAY	where			    CREATED_ETL_ID = 4229
+
+20221 rows deleted.
+
+Elapsed: 00:05:09.58
+
+Commit complete.
+
+Elapsed: 00:00:04.53
+SQL> 

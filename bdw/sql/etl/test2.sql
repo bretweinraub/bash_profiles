@@ -1,0 +1,8 @@
+
+DECLARE
+ x NUMBER;
+BEGIN
+ x := least (1,2,0,45);
+ DBMS_OUTPUT.PUT_LINE (x);
+END;
+/

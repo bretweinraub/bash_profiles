@@ -1,0 +1,58 @@
+SQL> select bytes, bytes / ( 22 * 1048576) from dba_free_space where bytes >
+(22 * 1048576) and tablespace_name = 'DATA1' order by bytes desc ;
+
+     BYTES BYTES/(22*1048576)
+---------- ------------------
+  67108864	   2.90909091
+  45273088	   1.96253551
+  35659776	   1.54580966
+  28610560	   1.24023438
+  27832320	   1.20649858
+  26316800	   1.14080256
+  24117248	   1.04545455
+
+7 rows selected.
+
+SQL> alter table dw_creative_impress_fact 
+    split partition i_apr_15_16 at (to_date('16-apr-2000','dd-mon-yyyy'))
+    into (
+    	partition i_04152000 tablespace DATA1 storage (initial 22M next 22M),
+        partition i_04162000 tablespace DATA1 storage (initial 22M next 22M)
+    )
+    parallel 8
+/	
+
+
+  2    3    4    5    6    7    8  alter table dw_creative_impress_fact
+*
+ERROR at line 1:
+ORA-12801: error signaled in parallel query server P003
+ORA-01652: unable to extend temp segment by 5632 in tablespace DATA1
+
+
+SQL>
+SQL> select bytes, bytes / ( 22 * 1048576) from dba_free_space where bytes >
+(22 * 1048576) and tablespace_name = 'DATA1' order by bytes desc ;
+
+     BYTES BYTES/(22*1048576)
+---------- ------------------
+  23080960	   1.00053267
+
+SQL> connect system/manager@whdev3
+Connected.
+SQL> alter tablespace data1 coalesce;
+
+Tablespace altered.
+
+SQL> select bytes, bytes / ( 22 * 1048576) from dba_free_space where bytes >
+(22 * 1048576) and tablespace_name = 'DATA1' order by bytes desc ;
+
+     BYTES BYTES/(22*1048576)
+---------- ------------------
+  67108864	   2.90909091
+  27832320	   1.20649858
+  26316800	   1.14080256
+
+SQL> quit
+
+

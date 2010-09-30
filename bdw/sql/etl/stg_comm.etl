@@ -1,0 +1,83 @@
+set timi on
+alter session set nls_date_format = 'MMDDYYYY HH24MISS';
+
+create index stg_commercelink_fact_idx1 on stg_commercelink_fact (log_date)
+/
+
+
+delete from stg_commercelink_fact where log_date < TO_DATE ('21-Mar-00 000000');
+
+commit;
+
+delete from stg_commercelink_fact where log_date < TO_DATE ('21-Mar-00 010000');
+
+commit;
+
+delete from stg_commercelink_fact where log_date < TO_DATE ('21-Mar-00 020000');
+
+commit;
+delete from stg_commercelink_fact where log_date < TO_DATE ('21-Mar-00 030000');
+
+commit;
+delete from stg_commercelink_fact where log_date < TO_DATE ('21-Mar-00 040000');
+
+commit;
+delete from stg_commercelink_fact where log_date < TO_DATE ('21-Mar-00 050000');
+
+commit;
+delete from stg_commercelink_fact where log_date < TO_DATE ('21-Mar-00 060000');
+
+commit;
+delete from stg_commercelink_fact where log_date < TO_DATE ('21-Mar-00 070000');
+
+commit;
+delete from stg_commercelink_fact where log_date < TO_DATE ('21-Mar-00 080000');
+
+commit;
+delete from stg_commercelink_fact where log_date < TO_DATE ('21-Mar-00 090000');
+
+commit;
+delete from stg_commercelink_fact where log_date < TO_DATE ('21-Mar-00 100000');
+
+commit;
+delete from stg_commercelink_fact where log_date < TO_DATE ('21-Mar-00 110000');
+
+commit;
+delete from stg_commercelink_fact where log_date < TO_DATE ('21-Mar-00 120000');
+
+commit;
+delete from stg_commercelink_fact where log_date < TO_DATE ('21-Mar-00 130000');
+
+commit;
+delete from stg_commercelink_fact where log_date < TO_DATE ('21-Mar-00 140000');
+
+commit;
+delete from stg_commercelink_fact where log_date < TO_DATE ('21-Mar-00 150000');
+
+commit;
+delete from stg_commercelink_fact where log_date < TO_DATE ('21-Mar-00 160000');
+
+commit;
+delete from stg_commercelink_fact where log_date < TO_DATE ('21-Mar-00 170000');
+
+commit;
+delete from stg_commercelink_fact where log_date < TO_DATE ('21-Mar-00 180000');
+
+commit;
+delete from stg_commercelink_fact where log_date < TO_DATE ('21-Mar-00 190000');
+
+commit;
+delete from stg_commercelink_fact where log_date < TO_DATE ('21-Mar-00 200000');
+
+commit;
+delete from stg_commercelink_fact where log_date < TO_DATE ('21-Mar-00 210000');
+
+commit;
+delete from stg_commercelink_fact where log_date < TO_DATE ('21-Mar-00 220000');
+
+commit;
+
+delete from stg_commercelink_fact where log_date < TO_DATE ('21-Mar-00 230000');
+
+commit;
+

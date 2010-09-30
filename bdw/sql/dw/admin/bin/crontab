@@ -1,0 +1,45 @@
+#
+# Every minute, check if database is up
+#* * * * * /opt/app/oracle/admin/bin/chk_db_up.sh QADW1
+#
+# Every 5 minute, check if Net8 listener WEB is up
+#0,5,10,15,20,25,30,35,40,45,50,55 * * * * /opt/app/oracle/admin/bin/chk_lsnr_up.sh web qadw1web
+#
+# Every 5 minute, check if Net8 listener PRIVATE is up
+#0,5,10,15,20,25,30,35,40,45,50,55 * * * * /opt/app/oracle/admin/bin/chk_lsnr_up.sh private qadw1int
+#
+# Every 5 minutes, check if UNIX file-systems are filling up
+#0,5,10,15,20,25,30,35,40,45,50,55 * * * * /opt/app/oracle/admin/bin/chk_df.sh QADW1
+#
+# Every four hours, check if anything in DB is running out of space
+#5 3,7,11,15,19,23 * * * /opt/app/oracle/admin/bin/chk_spc.sh QADW1
+#
+# Every eight hours, check if any Oracle errors have surfaced
+#7 7,15,23 * * * /opt/app/oracle/admin/bin/chk_oerr.sh QADW1
+#
+# Every eight hours, check if any objects/packages need to be "pinned"
+#10 7,15,23 * * * /opt/app/oracle/admin/bin/pin.sh QADW1
+#
+# Every Sunday at 1:05am, clean up "alert.log", "core", and ".trc" files
+#5 1 * * 0 /opt/app/oracle/admin/bin/cleanup.sh QADW1
+#
+# Every day at 12:10am run the data warehouse etl for yesterday
+#10 0 * * * /dw/bin/dw_etl_yesterday.sh 
+#24 14 * * * /dw01/etl/bin/dw_etl_yesterday.sh 
+#
+# Run the management reports at 6:10 every day (sps 10aug99).
+#
+#10 06 * * * /opt/app/oracle/local/reports/RunReports -s QADW1 >> /opt/app/oracle/local/reports/RunReports.log 2>&1
+#
+# Check the archivelogs every 15 minutes (sps 06aug99).
+#
+#2,17,32,47 * * * * /opt/app/oracle/local/backup/ArchiveCheck -s QADW1 >> /opt/app/oracle/local/backup/ArchiveCheck.log 2>&1
+# Added 12/2/99 by CDH to handle active switching.
+#
+#0,5,10,15,20,25,30,35,40,45,50,55 * * * * /opt/app/oracle/local/backup/ArchiveCheck -s QADW1 >> /opt/app/oracle/local/backup/ArchiveCheck.log 2>&1
+# Backup the database at 11:00pm pacific time (sps 06aug99).
+#
+# 0 23 * * * /opt/app/oracle/local/backup/HotDBBackup -s QADW1 >> /opt/app/oracle/local/backup/HotDBBackup.log 2>&1
+#
+# Remove any archive logs littering the filesystem periodically
+0 1 * * * rm -f /opt/app/oracle/admin/QADW1/arch/*

@@ -1,0 +1,33 @@
+<: # -*-sh-*-
+use Helpers::shellHelpers; # $m80path = [{command => "embedperl"}, {command => "m4", chmod => "+x" }];
+print Helpers::shellHelpers::shellScript ( r => [],
+                                           getopts => '(p,-profile)'); 
+:>
+
+
+docmd cd $(dirname $0)
+
+path=$(pwd)
+
+checkfile -d $profile
+
+docmd cd ~
+
+
+funcy () {
+    while [ $# -gt 0 ]; do 
+	file=$1
+	shift
+	if [ -e ${file} ];  then
+	    docmd mv ${file} ${file}.bak.$$
+	fi
+
+	docmd ln -s ${path}/${profile}/${file} ${file}
+    done
+}
+
+funcy .profile .emacs .emacs_bash
+
+cleanup 0
+
+    

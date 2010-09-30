@@ -1,0 +1,68 @@
+sql> select bytes, blocks from dba_free_space where bytes > (22 * 1048576) order by bytes desc ;
+
+     BYTES     BLOCKS
+---------- ----------
+ 134037504	32724
+ 134037504	32724
+ 129839104	31699
+ 108847104	26574
+  52322304	12774
+  48123904	11749
+  45273088	11053
+  27832320	 6795
+  25317376	 6181
+
+9 rows selected.
+
+SQL> 
+SQL> 
+SQL> alter table dw_creative_impress_fact 
+    split partition i_apr_15_16 at (to_date('16-apr-2000','dd-mon-yyyy'))
+    into (
+    	partition i_04152000 tablespace DATA1 storage (initial 22M next 22M),
+        partition i_04162000 tablespace DATA1 storage (initial 22M next 22M)
+    )
+    parallel 8
+/	
+
+
+  2    3    4    5    6    7    8  alter table dw_creative_impress_fact
+*
+ERROR at line 1:
+ORA-12801: error signaled in parallel query server P000
+ORA-01658: unable to create INITIAL extent for segment in tablespace DATA1
+
+
+SQL> SQL> SQL> select bytes, blocks from dba_free_space where bytes > (22 * 1048576) order by bytes desc ;
+
+     BYTES     BLOCKS
+---------- ----------
+ 134037504	32724
+ 134037504	32724
+ 129839104	31699
+ 108847104	26574
+  52322304	12774
+  48123904	11749
+  25317376	 6181
+  23080960	 5635
+  23080960	 5635
+
+9 rows selected.
+
+SQL> select bytes, blocks from dba_free_space where bytes > (22 * 1048576) order by bytes desc ;
+
+     BYTES     BLOCKS
+---------- ----------
+ 134037504	32724
+ 134037504	32724
+ 129839104	31699
+ 108847104	26574
+  52322304	12774
+  48123904	11749
+  25317376	 6181
+  23080960	 5635
+  23080960	 5635
+
+9 rows selected.
+
+SQL> 

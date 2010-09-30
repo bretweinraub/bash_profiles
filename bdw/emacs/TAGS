@@ -1,0 +1,113 @@
+
+sgml-mode.el,6231
+(defgroup sgml sgml41,1380
+(defcustom sgml-basic-offset sgml-basic-offset45,1443
+(defcustom sgml-transformation sgml-transformation50,1575
+(defcustom sgml-mode-hook sgml-mode-hook58,1810
+(defvar sgml-specials sgml-specials67,2119
+(defvar sgml-quick-keys sgml-quick-keys83,2788
+(defvar sgml-mode-mapsgml-mode-map87,2960
+(defun sgml-make-syntax-table sgml-make-syntax-table140,5327
+(defvar sgml-mode-syntax-table sgml-mode-syntax-table155,5843
+(defconst sgml-tag-syntax-tablesgml-tag-syntax-table158,5978
+(defcustom sgml-name-8bit-mode sgml-name-8bit-mode165,6229
+(defvar sgml-char-namessgml-char-names170,6364
+(defvar sgml-char-names-tablesgml-char-names-table207,8105
+(defcustom sgml-validate-command sgml-validate-command224,8685
+(defvar sgml-saved-validate-command sgml-saved-validate-command232,8941
+(defcustom sgml-slash-distance sgml-slash-distance237,9134
+(defconst sgml-namespace-re sgml-namespace-re242,9294
+(defconst sgml-name-re sgml-name-re243,9353
+(defconst sgml-tag-name-re sgml-tag-name-re244,9409
+(defconst sgml-attrs-re sgml-attrs-re245,9478
+(defconst sgml-start-tag-regex sgml-start-tag-regex246,9547
+(defface sgml-namespace-facesgml-namespace-face250,9722
+(defvar sgml-namespace-face sgml-namespace-face253,9869
+(defconst sgml-font-lock-keywords-1sgml-font-lock-keywords-1256,9932
+(defconst sgml-font-lock-keywords-2sgml-font-lock-keywords-2270,10740
+(defvar sgml-font-lock-keywords sgml-font-lock-keywords282,11164
+(defvar sgml-font-lock-syntactic-keywordssgml-font-lock-syntactic-keywords285,11296
+(defvar sgml-face-tag-alist sgml-face-tag-alist294,11637
+(defvar sgml-tag-face-alist sgml-tag-face-alist297,11715
+(defvar sgml-display-text sgml-display-text302,11968
+(defvar sgml-tags-invisible sgml-tags-invisible306,12082
+(defcustom sgml-tag-alistsgml-tag-alist308,12116
+(defcustom sgml-tag-helpsgml-tag-help336,12905
+(defcustom sgml-xml-mode sgml-xml-mode348,13366
+(defvar sgml-empty-tags sgml-empty-tags357,13670
+(defvar sgml-unclosed-tags sgml-unclosed-tags360,13755
+(defun sgml-xml-guess sgml-xml-guess363,13861
+(defvar v2)v2379,14401
+(defun sgml-comment-indent-new-line sgml-comment-indent-new-line381,14437
+(defun sgml-mode-facemenu-add-face-function sgml-mode-facemenu-add-face-function388,14646
+(define-derived-mode sgml-mode sgml-mode397,14973
+(defalias 'xml-mode xml-mode464,17984
+(defun sgml-comment-indent sgml-comment-indent466,18017
+(defun sgml-slash sgml-slash469,18091
+(defun sgml-slash-matching sgml-slash-matching485,18520
+(defun sgml-name-char sgml-name-char528,20026
+(defun sgml-namify-char sgml-namify-char542,20499
+(defun sgml-name-self sgml-name-self558,21017
+(defun sgml-maybe-name-self sgml-maybe-name-self563,21170
+(defun sgml-name-8bit-mode sgml-name-8bit-mode574,21505
+(defvar sgml-tag-last sgml-tag-last587,22045
+(defvar sgml-tag-history sgml-tag-history588,22072
+(define-skeleton sgml-tagsgml-tag589,22102
+(defun sgml-attributes sgml-attributes629,23642
+(defun sgml-auto-attributes sgml-auto-attributes667,24917
+(defun sgml-tag-help sgml-tag-help683,25470
+(defun sgml-maybe-end-tag sgml-maybe-end-tag700,26007
+(defun sgml-skip-tag-backward sgml-skip-tag-backward707,26274
+(defun sgml-skip-tag-forward sgml-skip-tag-forward726,26953
+(defun sgml-delete-tag sgml-delete-tag764,28269
+(defun sgml-tags-invisible sgml-tags-invisible821,30075
+(defun sgml-point-entered sgml-point-entered864,31601
+(defun sgml-validate sgml-validate882,32121
+(defsubst sgml-at-indentation-p sgml-at-indentation-p900,32828
+(defun sgml-lexical-context sgml-lexical-context906,33006
+(defun sgml-beginning-of-tag sgml-beginning-of-tag947,34749
+(defun sgml-value sgml-value961,35199
+(defun sgml-quote sgml-quote979,35812
+(defun sgml-pretty-print sgml-pretty-print1000,36606
+(defstruct (sgml-tagsgml-tag1029,37489
+(defsubst sgml-parse-tag-name sgml-parse-tag-name1033,37598
+(defsubst sgml-looking-back-at sgml-looking-back-at1038,37769
+(defun sgml-parse-tag-backward sgml-parse-tag-backward1044,38003
+(defun sgml-get-context sgml-get-context1092,39868
+(defun sgml-show-context sgml-show-context1178,42978
+(defun sgml-close-tag sgml-close-tag1194,43409
+(defun sgml-empty-tag-p sgml-empty-tag-p1214,44051
+(defun sgml-unclosed-tag-p sgml-unclosed-tag-p1219,44228
+(defun sgml-calculate-indent sgml-calculate-indent1224,44426
+(defun sgml-indent-line sgml-indent-line1332,47992
+(defun sgml-guess-indent sgml-guess-indent1347,48370
+(defun sgml-parse-dtd sgml-parse-dtd1362,48910
+(defcustom html-mode-hook html-mode-hook1380,49584
+(defvar html-quick-keys html-quick-keys1387,49768
+(defvar html-mode-maphtml-mode-map1392,49974
+(defvar html-face-tag-alisthtml-face-tag-alist1451,52974
+(defvar html-tag-face-alisthtml-tag-face-alist1458,53136
+(defvar html-display-texthtml-display-text1481,53681
+(defvar html-tag-alisthtml-tag-alist1489,53875
+(defvar html-tag-helphtml-tag-help1636,58185
+(define-derived-mode html-mode html-mode1729,61141
+(defvar html-imenu-regexphtml-imenu-regexp1801,64594
+(defun html-imenu-index html-imenu-index1808,64932
+(define-minor-mode html-autoview-modehtml-autoview-mode1823,65382
+(define-skeleton html-href-anchorhtml-href-anchor1834,65801
+(define-skeleton html-name-anchorhtml-name-anchor1840,65946
+(define-skeleton html-headline-1html-headline-11845,66068
+(define-skeleton html-headline-2html-headline-21850,66160
+(define-skeleton html-headline-3html-headline-31855,66252
+(define-skeleton html-headline-4html-headline-41860,66344
+(define-skeleton html-headline-5html-headline-51865,66436
+(define-skeleton html-headline-6html-headline-61870,66528
+(define-skeleton html-horizontal-rulehtml-horizontal-rule1875,66620
+(define-skeleton html-imagehtml-image1880,66735
+(define-skeleton html-linehtml-line1886,66844
+(define-skeleton html-ordered-listhtml-ordered-list1891,66943
+(define-skeleton html-unordered-listhtml-unordered-list1898,67077
+(define-skeleton html-list-itemhtml-list-item1905,67215
+(define-skeleton html-paragraphhtml-paragraph1911,67339
+(define-skeleton html-checkboxeshtml-checkboxes1917,67464
+(define-skeleton html-radio-buttonshtml-radio-buttons1936,68108
