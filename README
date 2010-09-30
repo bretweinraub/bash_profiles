@@ -1,0 +1,15 @@
+
+in your home directory
+
+git clone git@github.com:bretweinraub/bash_profiles.git
+cd bash_profiles
+./install.sh -p bdw # that my profile world
+cd ..
+ls -l .profile .emacs .emacs_bash
+
+############
+
+The net effect of this is your .profile and .emacs are now your checked in first.
+
+To create a new "profile" suite, create a new directory in the toplevel of bash_profiles.
+
