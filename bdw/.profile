@@ -6,9 +6,9 @@ setVar () {
     _data=$1
     shift
     eval export $_data=\"$*\"
-    if [ -n "$SSH_TTY" ]; then
-	echo export $_data="$*"
-    fi
+#     if [ -n "$SSH_TTY" ]; then
+# 	echo export $_data="$*"
+#     fi
 }
 
 CVS () {
@@ -48,7 +48,8 @@ Make () {
     m80 --execute make $* ; 
 }
 alias reload="X=$(pwd); . ~/.profile; cd ${X}"
-alias hg='history | grep'
+#alias hg='history | grep'
+alias Hg='history | grep'
 alias llynx="lynx -nocolor -accept_all_cookies"
 alias h=history
 alias renwix="ssh -l bret renwix.com"
@@ -81,8 +82,17 @@ be () {
 
 e () {
     title=${M80_DIRECTORY_SELECTED}:${M80_BDF}
-    (emacs -cr gold --title $title -bg $BG_COLOR -fg $FG_COLOR -geometry 160x75+0 $* &)
+    (emacs -cr gold --title $title -bg $BG_COLOR -fg $FG_COLOR -geometry 160x75+0 --no-splash $* &)
 }
+
+erails () {
+    if [ -z "${M80_BDF}" ]; then
+	echo "this makes no sense when \$M80_BDF is not set"
+    else
+	e -f rails-start
+    fi
+}
+    
 
 E () {
     ( /usr/bin/emacs -cr gold -bg $BG_COLOR -fg $FG_COLOR -geometry 160x75+0 $* &)
@@ -326,7 +336,7 @@ sshKeyPromote () {
 
 gzipp () {
     test $(file -b $1 | awk '{print $1}') = "gzip"
-    return $?
+    $?
 }
 
 explode () {
@@ -441,11 +451,8 @@ latest () {
 export PS1='\u@\h:\w($M80_BDF)-> '
 
 match () {
-    for f in $(find . -type f | grep -v '~' | grep -v svn) ; do 
-	grep $* $f /dev/null
-# 	if [ $? -eq 0 ]; then
-# 	    echo
-# 	fi
+    for f in $(find . -type f | grep -v '~' | grep -v \.svn\/) ; do 
+	grep $* "$f" /dev/null 2> /dev/null
     done
 }
 
@@ -479,8 +486,6 @@ if [ -n "#{SSH_TTY}" ]; then
     fi
 fi
 
-m80 --env
-
 case "$TERM" in
 xterm*|rxvt*)
     PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
@@ -489,3 +494,31 @@ xterm*|rxvt*)
     ;;
 esac
 
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
+
+# xgem () { gem $* --no-ri --no-rdoc; }
+    
+rvmuse () {
+    gemsets=$(grep '@' < <(cd ~/.rvm/gems; find . -maxdepth 1 -type d )|sort)
+    set $gemsets
+    x=0
+    while [ $# -gt 0 ];do 
+	((x=$x+1))
+	echo $x"): "$1 >&2
+	shift
+    done
+    read line
+    x=0
+    set $gemsets
+    while [ $# -gt 0 ];do 
+	((x=$x+1))
+	if [ "$line" = "$x" ]; then
+	    eval "rvm use "$(echo $1 | cut -d/ -f2-)
+	fi
+	shift
+    done
+}
+
+hobo_wtf () {
+  $EDITOR $(find $(rvm gemdir)/gems/hobo* -iname '*.dryml' -exec grep 'filter-menu' {} + | cut -d: -f 1 | uniq)
+}

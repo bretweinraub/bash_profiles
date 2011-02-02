@@ -28,7 +28,10 @@
   ;; get rid of these real-estate hogs
   (tool-bar-mode)
   (scroll-bar-mode nil)
-  (menu-bar-mode nil))
+  (menu-bar-mode nil)
+  (tooltip-mode nil)
+  )
+
 
 (global-set-key (quote [f9]) (quote call-last-kbd-macro))
 (global-set-key (quote [f10]) (quote hippie-expand))
@@ -299,6 +302,38 @@
   (c-indent-command)
 )
 
+(defun ruby-method ()
+  "Create a new ruby method"
+  (interactive)
+  (setq method-name (read-from-minibuffer "What is the new method name? "))  
+  (setq args (read-from-minibuffer "What is are the args? "))  
+  (ruby-indent-command)
+  (insert "################################################################################\n")
+  (ruby-indent-command)
+  (insert "def " method-name "(" args ")\n")
+  (ruby-indent-command)
+  (insert "\n")
+  (ruby-indent-command)
+  (insert "end")
+  (ruby-indent-command)
+  (previous-line 1)
+)
+
+(defun ruby-abstract-method ()
+  "Create a new ruby abstract-method"
+  (interactive)
+  (setq method-name (read-from-minibuffer "What is the new method name?"))  
+  (ruby-indent-command)
+  (insert "def " method-name "(*args)\n")
+  (ruby-indent-command)
+  (insert "raise NotImplementedError.new(\"#{self.class} must define #{current_method}\")\n")
+  (ruby-indent-command)
+  (insert "end\n")
+  (ruby-indent-command)
+  (previous-line 1)
+)
+
+
 
 (defun create-java-class ()
   "Create a new java class"
@@ -422,7 +457,6 @@
 
 (load-library "p4")
 
-(load-library "rails")
 
 (load-library "psvn")
 
@@ -770,8 +804,12 @@ arg is set."
 (fset 'ruby-next-error
    [?\C-x ?4 ?b ?* ?s ?h ?e ?l ?l ?  return ?\C-n ?\C-a ?\C-@ ?\C-s ?: ?\C-b ?\M-w ?\C-x ?4 ?f ?\C-a ?\C-y ?\C-k return ?\C-x ?o ?\C-f ?\C-  ?\M-f ?\M-w ?\C-x ?o ?\M-x ?g ?o ?t ?o ?- ?l ?i ?n ?e return ?\C-y return])
 
+
+
+
 (global-set-key (quote [C-f9]) (quote ruby-first-error))
 (global-set-key (quote [C-f10]) (quote ruby-next-error))
+
 
 (fset 'restart-rails
    [?\C-x ?4 ?b ?i ?p ?o ?r ?t ?a ?l ?- ?s ?e ?r ?v ?e ?r return escape ?> ?\C-c ?\C-c])
@@ -779,3 +817,17 @@ arg is set."
 (global-set-key (quote [C-f6]) (quote restart-rails))
 
                        
+
+(load-library "rails")
+
+(defadvice list-and-goto-buffers (after 
+				  existing-buffer
+				  activate
+				  compile)
+  "Resort the buffer every time I move to it."
+   (Buffer-menu-sort 5))
+
+;; for emacs 23 ; this will revert to horizontal splits
+(setq split-width-threshold nil)
+
+(global-set-key (kbd "<Scroll_Lock>") '(lambda () (interactive) nil))
