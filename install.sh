@@ -271,7 +271,7 @@ funcy () {
     done
 }
 
-funcy .profile .emacs .emacs_bash
+funcy .profile .emacs .emacs_bash .m80directory
 
 cleanup 0
 
