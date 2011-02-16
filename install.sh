@@ -267,11 +267,15 @@ funcy () {
 	    docmd mv ${file} ${file}.bak.$$
 	fi
 
-	docmd ln -s ${path}/${profile}/${file} ${file}
+	if [ -e ${path}/${profile}/${file} ]; then
+	    docmd ln -s ${path}/${profile}/${file} ${file}
+	else
+	    printmsg cannot find ${path}/${profile}/${file}
+	fi
     done
 }
 
-funcy .profile .emacs .emacs_bash .m80directory
+funcy .profile .emacs .emacs_bash .m80directory .gemrc .gitk
 
 cleanup 0
 
