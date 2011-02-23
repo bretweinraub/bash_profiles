@@ -522,3 +522,13 @@ rvmuse () {
 hobo_wtf () {
   $EDITOR $(find $(rvm gemdir)/gems/hobo* -iname '*.dryml' -exec grep 'filter-menu' {} + | cut -d: -f 1 | uniq)
 }
+
+function gemdir {
+  if [[ -z "$1" ]] ; then
+    echo "gemdir expects a parameter, which should be a valid RVM Ruby selector"
+  else
+    rvm "$1"
+    cd $(rvm gemdir)
+    pwd
+  fi
+}
