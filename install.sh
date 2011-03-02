@@ -275,11 +275,8 @@ funcy () {
     done
 }
 
-<<<<<<< HEAD
-funcy .profile .emacs .emacs_bash .m80directory .gemrc
-=======
 funcy .profile .emacs .emacs_bash .m80directory .gemrc .gitk
->>>>>>> 58fecc35715a0a4fe249f65fbe10452c86115d05
+
 
 cleanup 0
 
