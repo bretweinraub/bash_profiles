@@ -831,3 +831,9 @@ arg is set."
 (setq split-width-threshold nil)
 
 (global-set-key (kbd "<Scroll_Lock>") '(lambda () (interactive) nil))
+
+(fset 'last-shell-command
+   [?\C-x ?4 ?b ?* ?s ?h ?e ?l ?l ?* return escape ?> return ?! ?! return])
+
+(global-set-key (quote [3 f4]) (quote last-shell-command))
+
