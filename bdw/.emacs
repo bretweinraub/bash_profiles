@@ -831,3 +831,5 @@ arg is set."
 (setq split-width-threshold nil)
 
 (global-set-key (kbd "<Scroll_Lock>") '(lambda () (interactive) nil))
+
+(require 'git)
