@@ -385,10 +385,11 @@ perlshell ()
 
 
 m80setEnv () {
-    m80directory
+    echo 0 | m80directory
     m80chooser
     cd $TOP
     . shelloader.sh
+    project-dir
 }
 
 tty=$(tty)
@@ -547,3 +548,6 @@ function gemdir {
 
 . /home/bweinraub/dev/aura.git/aura-scripts/m81/m81loader.sh
 
+eline () {
+    emacs -nw $1 --eval '(goto-line '$3')'
+}
