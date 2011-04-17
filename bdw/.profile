@@ -385,10 +385,11 @@ perlshell ()
 
 
 m80setEnv () {
-    m80directory
+    echo 0 | m80directory
     m80chooser
     cd $TOP
     . shelloader.sh
+    project-dir
 }
 
 tty=$(tty)
@@ -494,12 +495,24 @@ xterm*|rxvt*)
     ;;
 esac
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
+if [ -s "$HOME/.rvm/scripts/rvm" ]; then
+    source "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
+fi
 
 # xgem () { gem $* --no-ri --no-rdoc; }
     
 rvmuse () {
-    gemsets=$(grep '@' < <(cd ~/.rvm/gems; find . -maxdepth 1 -type d )|sort)
+    if [ -d ~/.rvm/gems ]; then
+	rvmdir=~/.rvm/gems
+    else
+	if [ -d /usr/local/rvm/gems ]; then
+	    rvmdir=/usr/local/rvm/gems
+	else
+	    echo "RVM installed?"
+	    return
+	fi
+    fi
+    gemsets=$(grep '@' < <(cd $rvmdir; find . -maxdepth 1 -type d )|sort)
     set $gemsets
     x=0
     while [ $# -gt 0 ];do 
@@ -531,4 +544,10 @@ function gemdir {
     cd $(rvm gemdir)
     pwd
   fi
+}
+
+. /home/bweinraub/dev/aura.git/aura-scripts/m81/m81loader.sh
+
+eline () {
+    emacs -nw $1 --eval '(goto-line '$3')'
 }
