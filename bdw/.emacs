@@ -832,12 +832,11 @@ arg is set."
 
 (global-set-key (kbd "<Scroll_Lock>") '(lambda () (interactive) nil))
 
-<<<<<<< HEAD:bdw/.emacs
-(require 'git)
-=======
 (fset 'last-shell-command
    [?\C-x ?4 ?b ?* ?s ?h ?e ?l ?l ?* return escape ?> return ?! ?! return])
 
 (global-set-key (quote [3 f4]) (quote last-shell-command))
 
->>>>>>> 85fce2c3faef5d4087480e15469396eaa1b79435:bdw/.emacs
+(load-library "git")
+
+(autoload 'geben "geben" "PHP Debugger on Emacs" t)
