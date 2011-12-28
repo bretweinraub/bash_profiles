@@ -1,22 +1,13 @@
 #
-# this is a m80 directory file.
-#
 
 %directory = ();
 
 $directory{'aura-git'} = {
     TOP => ($top = "/home/bweinraub/dev/aura.git"),
     M81_HOME => ($m81_home = "/home/bweinraub/dev/aura.git/aura-scripts/m81"),
-    M80_REPOSITORY => "$top/m80repository",
-    hooks => "$top/shelloader.sh",
+    M80_REPOSITORY => "/home/bweinraub/dev/aura.git/m80repository",
+    ORACLE_HOME => "/usr/lib/oracle/xe/app/oracle/product/10.2.0/server",
+    hooks => "/home/bweinraub/dev/aura.git/shelloader.sh",
     description => "Aura Git",
 };
-
-
-
-#
-# run m80 --directory to load your directory entry.
-#
-# or run eval $(m80 --genfuncs) to load the m80directory alias.
-#
 

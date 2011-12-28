@@ -370,7 +370,6 @@ loader ()  {
     done
 }
  
-loader ~/.local ~/.localenv  ~/.$(/bin/hostname -s)
 
 m80chooser () { eval $(m80 --chooser);}
 
@@ -495,9 +494,18 @@ xterm*|rxvt*)
     ;;
 esac
 
-if [ -s "$HOME/.rvm/scripts/rvm" ]; then
+if [ -d ~/.rvm/gems ]; then
     source "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
+else
+    if [ -d /usr/local/rvm/gems ]; then
+	source "/usr/local/rvm/scripts/rvm"  # This loads RVM into a shell session.
+    else
+	echo "RVM installed?"
+	return
+    fi
 fi
+
+
 
 # xgem () { gem $* --no-ri --no-rdoc; }
     
@@ -526,6 +534,8 @@ rvmuse () {
     while [ $# -gt 0 ];do 
 	((x=$x+1))
 	if [ "$line" = "$x" ]; then
+	    echo eval "rvm use "$(echo $1 | cut -d/ -f2-)
+
 	    eval "rvm use "$(echo $1 | cut -d/ -f2-)
 	fi
 	shift
@@ -551,3 +561,5 @@ function gemdir {
 eline () {
     emacs -nw $1 --eval '(goto-line '$3')'
 }
+
+loader ~/.local ~/.localenv  ~/.$(/bin/hostname -s)

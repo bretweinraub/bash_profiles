@@ -58,13 +58,24 @@
 (fset 'last-console-command
    [?\C-x ?4 ?b ?i ?p ?o ?r ?t ?a ?l ?- ?c ?o ?n ?s ?o ?l ?e return escape ?> ?\M-p return ?\C-x ?o])
 
+(fset 'last-iportal-shell-command
+   [?\C-x ?4 ?b ?i ?p ?o ?r ?t ?a ?l ?- ?s ?h ?e ?l ?l return escape ?> ?\M-p return ?\C-x ?o])
+
 (fset 'last-sql-command
    [?\C-x ?4 ?b ?i ?p ?o ?r ?t ?a ?l ?- ?s ?q ?l return escape ?> return ?\M-p return ?\C-x ?o])
 
 
 
+
+
 (global-set-key (quote [3 f1]) (quote last-console-command))
 (global-set-key (quote [3 f2]) (quote last-sql-command))
+(global-set-key (quote [3 f3]) (quote last-iportal-shell-command))
 
 
 (global-set-key "C" (quote go-to-shell))
+
+(fset 'last-shell-command
+   [?\C-x ?4 ?b ?* ?s ?h ?e ?l ?l ?* return escape ?> return ?! ?! return])
+
+(global-set-key (quote [3 f4]) (quote last-shell-command))
