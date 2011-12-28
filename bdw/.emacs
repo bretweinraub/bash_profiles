@@ -832,11 +832,13 @@ arg is set."
 
 (global-set-key (kbd "<Scroll_Lock>") '(lambda () (interactive) nil))
 
-(fset 'last-shell-command
-   [?\C-x ?4 ?b ?* ?s ?h ?e ?l ?l ?* return escape ?> return ?! ?! return])
 
-(global-set-key (quote [3 f4]) (quote last-shell-command))
+(setq indent-tabs-mode nil) ; always replace tabs with spaces
+
+(setq-default tab-width 4) ; set tab width to 4 for all 
+(setq ruby-indent-level 2)
 
 (load-library "git")
 
-(autoload 'geben "geben" "PHP Debugger on Emacs" t)
+(add-to-list 'load-path "~/bash_profiles/bdw/emacs/color-theme-6.6.0/")
+(load-library "color-theme")
