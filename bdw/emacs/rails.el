@@ -5,7 +5,7 @@
   (shell name)
   (pop-to-buffer name)
   (insert command)
-  (comint-send-input)
+;;  (comint-send-input)
 ;;  (global-set-key (concat "" accesskey) (quote call-last-kbd-macro))
   )
 
