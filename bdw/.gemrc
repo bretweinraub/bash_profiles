@@ -1,5 +1,4 @@
 --- 
-:benchmark: true
 :update_sources: true
 :sources: 
 - http://rubygems.org/

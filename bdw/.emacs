@@ -62,17 +62,34 @@
   (interactive)
   (eval-expression (quote (shell-command "(cd src/util; make install)" nil nil)) nil))
 
-(defun deal-test () 
-  "deal test"
-  (interactive)
-  (compile "(make -k && COMMAND='~/dev/m81/sm/modules/providers/RtgETLImpl/load.pl' m80 --execute debugChassis.sh -a 135052 -c eval)")
-  (other-window 1)
-  (end-of-buffer)
-  (other-window 1)
-  )
 
-(global-set-key (quote [f1]) (quote deal-test))
+(progn
+  (defvar compile-command "(cd ~/dev/bitbucket/rover && ROVERENV=dev ~/dev/bitbucket/rover/bin/roverun)")
+  (defun deal-test () 
+	"deal test"
+	(interactive)
+	(compile compile-command)
+	(other-window 1)
+	(end-of-buffer)
+	(other-window 1)
+	)
 
+  (defun debug-in-shell ()
+	"debug the compile command"
+	(interactive)
+	(switch-to-buffer "iportal-shell")
+	(insert compile-command)
+	(condition-case nil
+		(comint-send-input)
+	  ((debug error) nil))
+	)
+
+  (global-set-key (quote [f1]) (quote deal-test))
+  (global-set-key (quote [C-M-f11]) (quote deal-test))
+
+  (global-set-key (quote [f9]) (quote debug-in-shell))
+  (global-set-key (quote [C-M-f9]) (quote debug-in-shell))
+)
 
 ;; (defun ant-compile ()       ; Interactive version.
 ;;   "the ant local compile"
@@ -143,8 +160,8 @@
   (interactive "r")
   (query-replace (concat "$" name) (concat "$arg->{" name "}") nil nil nil))
 
-(global-set-key (quote [f2]) (quote next-error))
-(global-set-key (quote [C-M-f2]) (quote next-error))
+(global-set-key (quote [f10]) (quote next-error))
+(global-set-key (quote [C-M-f10]) (quote next-error))
 
 (fset 'insert-m80-table
    [?c ?r ?e ?a ?t ?e ?M ?8 ?0 ?S ?t ?a ?n ?d ?a ?t ?d backspace backspace ?r ?d ?T ?a ?b ?l ?e ?( ?, return ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?, return ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?\C-p ?\C-f ?( backspace backspace ?( return ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  backspace ?) ?m backspace ?m backspace ?, return ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?( ?) ?, return ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  backspace ?( ?) ?, return ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?) ?m ?4 ?_ ?d ?b ?n backspace backspace ?n ?l ?\; return])
@@ -777,6 +794,7 @@ arg is set."
 
 ;; (global-set-key (quote [f5]) (quote source-compile))
 (global-set-key (quote [f5]) (quote brep))
+(global-set-key (quote [C-M-f5]) (quote brep))
 
 
 
@@ -849,3 +867,9 @@ arg is set."
 
 (add-to-list 'load-path "~/bash_profiles/bdw/emacs/color-theme-6.6.0/")
 (load-library "color-theme")
+
+
+(speedbar-add-supported-extension ".rb")
+(speedbar-add-supported-extension ".php")
+(speedbar-add-supported-extension ".rc1")
+(speedbar-add-supported-extension ".erb")

@@ -450,7 +450,7 @@ latest () {
 
 export PS1='\u@\h:\w($M80_BDF)-> '
 
-match () {
+mmatch () {
     for f in $(find . -type f | grep -v '~' | grep -v \.svn\/) ; do 
 	grep $* "$f" /dev/null 2> /dev/null
     done
@@ -556,7 +556,7 @@ function gemdir {
   fi
 }
 
-. /home/bweinraub/dev/aura.git/aura-scripts/m81/m81loader.sh
+. /home/bret/dev/bitbucket/aura-scripts/m81/m81loader.sh
 
 eline () {
     emacs -nw $1 --eval '(goto-line '$3')'

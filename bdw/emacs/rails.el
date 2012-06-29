@@ -5,7 +5,9 @@
   (shell name)
   (pop-to-buffer name)
   (insert command)
-;;  (comint-send-input)
+  (condition-case nil
+	  (comint-send-input)
+	((debug error) nil))
 ;;  (global-set-key (concat "" accesskey) (quote call-last-kbd-macro))
   )
 
@@ -79,3 +81,6 @@
    [?\C-x ?4 ?b ?* ?s ?h ?e ?l ?l ?* return escape ?> return ?! ?! return])
 
 (global-set-key (quote [3 f4]) (quote last-shell-command))
+
+(setq ruby-deep-indent-paren nil)
+
