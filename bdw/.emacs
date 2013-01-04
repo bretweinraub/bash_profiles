@@ -267,6 +267,18 @@
   (insert "\n")
 )
 
+(defun only-these-parameters ()
+  "insert the only these params"
+  (interactive)
+  (insert "      config,dummy = CkuruTools.only_these_parameters(h,")
+  (ruby-indent-line)
+  (insert "\n        [:config,{:instance_that_inherits_from => String,:required => true}]")
+  (ruby-indent-line)
+  (insert "\n        )")
+  (ruby-indent-line)
+  )
+  
+
 (defun create-package-header ()
   "Hopefully will create an oracle package header"
   (interactive)
@@ -869,7 +881,79 @@ arg is set."
 (load-library "color-theme")
 
 
-(speedbar-add-supported-extension ".rb")
-(speedbar-add-supported-extension ".php")
-(speedbar-add-supported-extension ".rc1")
-(speedbar-add-supported-extension ".erb")
+(add-to-list 'load-path "~/geben-0.26/")
+(autoload 'geben "geben" "PHP Debugger on Emacs" t)
+
+
+;; (speedbar-add-supported-extension ".rb")
+;; (speedbar-add-supported-extension ".php")
+;; (speedbar-add-supported-extension ".rc1")
+;; (speedbar-add-supported-extension ".erb")
+;; (speedbar-add-supported-extension ".sql")
+;; (speedbar-add-supported-extension ".")
+
+(setq mac-option-modifier  'hyper)
+(setq mac-command-modifier 'meta)
+
+(load-file "~/Downloads/ebs.txt")
+(global-set-key [C-tab] (quote ebs-switch-buffer))
+
+;; org mode
+
+;; The following lines are always needed.  Choose your own keys.
+
+(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+(add-hook 'org-mode-hook 'turn-on-font-lock) ; not needed when global-font-lock-mode is on
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
+
+
+;; crashes osx
+
+(global-unset-key "")
+
+(load "~/Downloads/nxhtml/autostart.el")
+
+(defun devplan-org ()
+  "open the devplan-org file"
+  (interactive)
+  )
+
+
+
+(defun rover-find ()       ; Interactive version.                                                                              
+  "rover-find"
+  (interactive)
+  (setq text (read-from-minibuffer "Search text? "))
+  (find-name-dired (concat (getenv "HOME") "/dev/bitbucket/rover") (concat "*" text "*"))
+)
+
+(global-set-key [C-M-f6] (quote find-name-dired))
+
+(global-set-key [C-M-f7] (quote rover-find))
+
+
+(defun fix-cd () 
+  ""
+  (interactive)
+  (insert "echo $(pwd)\n")
+  (comint-send-input)
+  (previous-line 2)
+  (insert "cd ")
+  (comint-send-input)
+  )
+
+(global-set-key [C-M-f4] (quote fix-cd))echo $(pwd)
+
+
+
+;; bury *scratch* buffer instead of kill it
+(defadvice kill-buffer (around kill-buffer-around-advice activate)
+  (let ((buffer-to-kill (ad-get-arg 0)))
+    (if (equal buffer-to-kill "*scratch*")
+        (bury-buffer)
+      ad-do-it)))
+
+(setq js-indent-level 2)
+
