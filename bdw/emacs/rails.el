@@ -22,6 +22,7 @@
     (shell-with-command (concat server "-console") "console" "c")
     (shell-with-command (concat server "-server") "server" "s")
     (shell-with-command (concat server "-shell") "cd $TOP" "C")
+    (shell-with-command (concat server "-rover") "cd ~/dev/bitbucket/rover" "r")
     ))
 
 
@@ -49,6 +50,14 @@
   (pop-to-buffer "iportal-sql")
   (end-of-buffer))
 
+(defun go-to-rover ()
+  (interactive)
+  ""
+  (pop-to-buffer "iportal-rover")
+  (end-of-buffer))
+
+
+
 (global-set-key "s" (quote go-to-server))
 
 (global-set-key "c" (quote go-to-console))
@@ -56,6 +65,8 @@
 (global-set-key "S" (quote go-to-sql))
 
 (global-set-key "C" (quote go-to-shell))
+
+(global-set-key "r" (quote go-to-rover))
 
 (fset 'last-console-command
    [?\C-x ?4 ?b ?i ?p ?o ?r ?t ?a ?l ?- ?c ?o ?n ?s ?o ?l ?e return escape ?> ?\M-p return ?\C-x ?o])

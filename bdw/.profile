@@ -1,5 +1,5 @@
 
-export  PATH=/usr/local/m80-0.07/bin:$PATH
+export  PATH=/usr/local/bin:/usr/local/m80-0.07/bin:$PATH
 export PATH=$PATH:/var/lib/gems/1.8/bin
 
 setVar () {
@@ -36,7 +36,12 @@ alias c="clear"
 alias x="chmod +x "
 
 if [ $TERM != "dumb" ]; then # emacs sets term to dump; and can't read the color output of ls
-    alias ls="/bin/ls --color=always -aF"
+	ls --color=always >& /dev/null
+	if [ $? -ne 0 ]; then
+		alias ls="/bin/ls -FaG"
+	else
+		alias ls="/bin/ls --color=always -aF"
+	fi
 else
     alias ls="/bin/ls -aF"    
 fi
