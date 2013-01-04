@@ -568,3 +568,6 @@ eline () {
 }
 
 loader ~/.local ~/.localenv  ~/.$(/bin/hostname -s)
+
+export GIT_AUTHOR_NAME="Bret Weinraub"
+export GIT_COMMITTER_NAME="Bret Weinraub"
