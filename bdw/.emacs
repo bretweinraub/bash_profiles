@@ -895,7 +895,7 @@ arg is set."
 (setq mac-option-modifier  'hyper)
 (setq mac-command-modifier 'meta)
 
-(load-file "~/Downloads/ebs.txt")
+(load-file "~/bash_profiles/bdw/emacs/ebs.el")
 (global-set-key [C-tab] (quote ebs-switch-buffer))
 
 ;; org mode
