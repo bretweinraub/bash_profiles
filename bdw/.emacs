@@ -1,4 +1,4 @@
-;; Red Hat Linux default .emacs initialization file  ; -*- mode: emacs-lisp -*-
+;; Rd Hat Linux default .emacs initialization file  ; -*- mode: emacs-lisp -*-
 
 ;; Set up the keyboard so the delete key on both the regular keyboard
 ;; and the keypad delete the character under the cursor and to the right
@@ -340,7 +340,7 @@
 (defun ruby-method ()
   "Create a new ruby method"
   (interactive)
-  (setq method-name (read-from-minibuffer "What is the new method name? "))  
+  (setq method-name (read-from-minibuffer "What is the new method name? ")) 
   (setq args (read-from-minibuffer "What is are the args? "))  
   (ruby-indent-command)
   (insert "################################################################################\n")
@@ -884,7 +884,6 @@ arg is set."
 (add-to-list 'load-path "~/geben-0.26/")
 (autoload 'geben "geben" "PHP Debugger on Emacs" t)
 
-
 ;; (speedbar-add-supported-extension ".rb")
 ;; (speedbar-add-supported-extension ".php")
 ;; (speedbar-add-supported-extension ".rc1")
@@ -956,4 +955,3 @@ arg is set."
       ad-do-it)))
 
 (setq js-indent-level 2)
-
