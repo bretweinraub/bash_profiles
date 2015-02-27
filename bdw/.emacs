@@ -3,6 +3,12 @@
 ;; Set up the keyboard so the delete key on both the regular keyboard
 ;; and the keypad delete the character under the cursor and to the right
 ;; under X, instead of the default, backspace behavior.
+
+(setq js-indent-level 2)
+
+(set-variable (quote js-indent-level) 2 nil)
+(set-variable (quote indent-tabs-mode) nil nil)
+
 (global-set-key [delete] 'delete-char)
 (global-set-key [kp-delete] 'delete-char)
 
@@ -61,7 +67,6 @@
   "run make install"
   (interactive)
   (eval-expression (quote (shell-command "(cd src/util; make install)" nil nil)) nil))
-
 
 (progn
   (defvar compile-command "(cd ~/dev/bitbucket/rover && ROVERENV=dev ~/dev/bitbucket/rover/bin/roverun)")
@@ -510,28 +515,16 @@
 (global-set-key "" (quote quoted-insert))
 
 
-(defadvice switch-to-buffer (before 
-			     existing-buffer
-			     activate
-			     compile)
-  "When interactive, switch to existing buffers only unless a prefix
-arg is set."
-  (interactive
-   (list (read-buffer "Switch to buffer: "
-		      (other-buffer)
-		      (null current-prefix-arg)))))
-
-
-(defadvice switch-to-buffer (before 
-			     existing-buffer
-			     activate
-			     compile)
-  "When interactive, switch to existing buffers only unless a prefix
-arg is set."
-  (interactive
-   (list (read-buffer "Switch to buffer: "
-		      (other-buffer)
-		      (null current-prefix-arg)))))
+;; (defadvice switch-to-buffer (before 
+;; 			     existing-buffer
+;; 			     activate
+;; 			     compile)
+;;   "When interactive, switch to existing buffers only unless a prefix
+;; arg is set."
+;;   (interactive
+;;    (list (read-buffer "Switch to buffer: "
+;; 		      (other-buffer)
+;; 		      (null current-prefix-arg)))))
 
 
 (defadvice dired-find-file-other-window (before 
@@ -611,10 +604,6 @@ arg is set."
    "\C-[%portalframw\C-?ework\C-mperfWeb\C-m!\C-x\C-s")
 (global-set-key (quote [f7]) (quote suh))
 
-
-(fset 'my-p4-submit
-   "\C-s<\C-a\C-k\C-i")
-(global-set-key (quote [f12]) (quote my-p4-submit))
 
 (put 'set-goal-column 'disabled nil)
 
@@ -706,11 +695,18 @@ arg is set."
   (insert "}\n")
   (insert "\n")
 )
+
+(defun go-to-scratch ()
+  "go to scratch buffer"
+  (interactive)
+  (switch-to-buffer-other-window "*scratch*")
+  )
   
 
+
 (global-set-key (quote [f4]) (quote commenter))
-(global-set-key (quote [f12]) (quote delete-horizontal-space))
-(global-set-key (quote [C-M-f12]) (quote delete-horizontal-space))
+(global-set-key (quote [f12]) (quote go-to-scratch))
+(global-set-key (quote [C-M-f12]) (quote go-to-scratch)) 
 
 (load "desktop")
 (desktop-load-default)
@@ -925,7 +921,7 @@ arg is set."
   "rover-find"
   (interactive)
   (setq text (read-from-minibuffer "Search text? "))
-  (find-name-dired (concat (getenv "HOME") "/dev/bitbucket/rover") (concat "*" text "*"))
+  (find-name-dired (concat (getenv "HOME") "/dev/bitbucket/aura-rover-config") (concat "*" text "*"))
 )
 
 (global-set-key [C-M-f6] (quote find-name-dired))
@@ -943,7 +939,7 @@ arg is set."
   (comint-send-input)
   )
 
-(global-set-key [C-M-f4] (quote fix-cd))echo $(pwd)
+(global-set-key [C-M-f4] (quote fix-cd))
 
 
 
@@ -955,3 +951,22 @@ arg is set."
       ad-do-it)))
 
 (setq js-indent-level 2)
+=======
+
+
+;; http://www.emacswiki.org/emacs/IndentingJava
+(add-hook 'java-mode-hook (lambda ()
+							(setq c-basic-offset 2
+								  tab-width 2
+								  indent-tabs-mode nil)))
+
+(fset 'php-dump
+   [?\C-a tab ?e ?c ?h ?o ?  ?v ?a ?r ?_ ?d ?u ?m ?p ?\( ?\C-e ?\) ?\; ?\C-a tab])
+
+(global-set-key "p" (quote php-dump))
+
+(load-library "rails")
+(load-library "bretsmac")
+(put 'dired-find-alternate-file 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
+
