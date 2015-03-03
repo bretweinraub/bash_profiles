@@ -117,6 +117,13 @@
   (comint-previous-input 1)
   )
 
+(defun get-project-org-file ()
+  (interactive)
+  "get the project org file in another window"
+  (find-file-other-window (concat rover-base-path "/project.org") t)
+  )
+
+
 (global-set-key "s" (quote go-to-server))
 
 (global-set-key "c" (quote go-to-console))
@@ -127,6 +134,7 @@
 
 (global-set-key "r" (quote go-to-rover))
 (global-set-key "h" (quote go-home))
+(global-set-key "o" (quote get-project-org-file))
 
 (fset 'last-console-command
    [?\C-x ?4 ?b ?i ?p ?o ?r ?t ?a ?l ?- ?c ?o ?n ?s ?o ?l ?e return escape ?> ?\M-p return ?\C-x ?o])
