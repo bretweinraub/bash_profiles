@@ -499,7 +499,7 @@ xterm*|rxvt*)
     ;;
 esac
 
-if [ -d ~/.rvm/gems ]; then
+if [ -f ~/.rvm/scripts/rvm ]; then
     source "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
 else
     if [ -d /usr/local/rvm/gems ]; then
