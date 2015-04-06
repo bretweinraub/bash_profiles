@@ -30,7 +30,7 @@ funcy () {
     done
 }
 
-funcy .profile .emacs .emacs_bash .m80directory .gemrc .gitk
+funcy .profile .emacs .emacs_bash .m80directory .gemrc .gitk .bash_profile
 
 
 cleanup 0
