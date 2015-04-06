@@ -20,13 +20,19 @@
   (puthash key value (gethash env railshash)))
 
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/aurabright/bretsmac/bright_app" "bright_app")
+(set_env "root" "/Users/bretweinraub/dev/bitbucket/bright_ci/" "bright_ci")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/aurabright/bretsmac/bright-rails4" "bright4")
+(set_env "root" "/Users/bretweinraub/.rover/workspaces/medtronic/bretsmac_prodcopy2" "medtronic2")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/MedizinMedien/bretsmac2" "mma2")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/MedizinMedien/bretsmac4" "mma4")
+
+(set_env "root" "/Users/bretweinraub/.rover/workspaces/yntp/bretsmac" "yntp")
+
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/finaura/bretsmac/fin3" "finaura")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/usada/bretsmac2" "usada")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/penman/bretsmac" "penman")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/penman/bretsmac2" "penman2")
+(set_env "root" "/Users/bretweinraub/.rover/workspaces/knowledgefront/bretsmac" "knowledgefront")
 
 (defun shell-with-command (name command accesskey)
   "Run a shell buffer with name ; and execute command with init"
@@ -40,17 +46,21 @@
 ;;  (global-set-key (concat "" accesskey) (quote call-last-kbd-macro))
   )
 
-(defun use (server)
+(defun use ()
   "Begin a rails interactive environment"
   (interactive)
+  (setq server (read-from-minibuffer "Use Envirornment? "))
   (progn
 	(setq rails-env server)
 	(setq rover-base-path (get_env "root" server))
-	))
+	(setq htdocs-base-path
+		  (substring (shell-command-to-string (concat "/bin/echo " rover-base-path "| awk -F/ '{print $(NF-1)\"/\"$NF}'")) 0 -1)
+	)))
 
-(defun rails-start (&optional server)
+(defun rails-start ()
   "Begin a rails interactive environment"
   (interactive)
+  (setq server (read-from-minibuffer "Search text? "))
   (if server
       nil
     (setq server "bright_app"))
@@ -58,6 +68,8 @@
 	  (setq rover-base-path (get_env "root" server))
 	(setq rover-base-path (concat "~/.rover/workspaces/" (getenv "ROVERENV") "/" server)))
   (setq default-directory rover-base-path)
+  (setq htdocs-base-path
+		(substring (shell-command-to-string (concat "/bin/echo " rover-base-path "| awk -F/ '{print $(NF-1)\"/\"$NF}'")) 0 -1))
   (progn
 	(setq rails-env server)
     (shell-with-command (concat server "-sql") (concat "cd " rover-base-path "; rails db") "S")
@@ -65,6 +77,7 @@
     (shell-with-command (concat server "-console") (concat "cd " rover-base-path "; rails c") "c")
     (shell-with-command (concat server "-shell") (concat "cd " rover-base-path) "c")
     (shell-with-command (concat server "-rover") (concat "cd ~/dev/bitbucket/aura-rover-config") "c")
+    (shell-with-command (concat server "-htdocs") (concat  "cd " htdocs-base-path) "H")
     ))
 
 (defun go-to-server ()
@@ -74,6 +87,15 @@
   (end-of-buffer)
   (comint-previous-input 1)
 )
+
+(defun go-to-htdocs ()
+  (interactive)
+  ""
+  (pop-to-buffer (concat rails-env "-htdocs"))
+  (end-of-buffer)
+  (comint-previous-input 1)
+)
+
 
 (defun go-to-shell ()
   (interactive)
@@ -123,8 +145,21 @@
   (find-file-other-window (concat rover-base-path "/project.org") t)
   )
 
+(defun go-to-db-migrate ()
+  (interactive)
+  "get the project org file in another window"
+  (find-file-other-window (concat rover-base-path "/db/migrate") t)
+  )
+
+(defun rails-find ()       ; Interactive version.                                                                              
+  "rails-find"
+  (interactive)
+  (setq text (read-from-minibuffer "Search text? "))
+  (find-name-dired (concat rover-base-path "/app") (concat "*" text "*"))
+)
 
 (global-set-key "s" (quote go-to-server))
+(global-set-key "H" (quote go-to-htdocs))
 
 (global-set-key "c" (quote go-to-console))
 
@@ -135,6 +170,8 @@
 (global-set-key "r" (quote go-to-rover))
 (global-set-key "h" (quote go-home))
 (global-set-key "o" (quote get-project-org-file))
+(global-set-key "d" (quote go-to-db-migrate))
+(global-set-key "f" (quote rails-find))
 
 (fset 'last-console-command
    [?\C-x ?4 ?b ?i ?p ?o ?r ?t ?a ?l ?- ?c ?o ?n ?s ?o ?l ?e return escape ?> ?\M-p return ?\C-x ?o])

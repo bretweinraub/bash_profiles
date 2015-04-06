@@ -985,3 +985,6 @@ URL `http://ergoemacs.org/emacs/emacs_copy_file_path.html'"
     (message "File path copied: 「%s」" fPath)))
 
 
+(load-library "php-mode")
+(add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
+(add-to-list 'auto-mode-alist '("\\.inc$" . php-mode))
