@@ -22,9 +22,12 @@
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/aurabright/bretsmac/bright_app" "bright_app")
 (set_env "root" "/Users/bretweinraub/dev/bitbucket/bright_ci/" "bright_ci")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/aurabright/bretsmac/bright-rails4" "bright4")
+(set_env "root" "/Users/bretweinraub/.rover/workspaces/bright/bretsmac" "bright")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/medtronic/bretsmac_prodcopy2" "medtronic2")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/MedizinMedien/bretsmac2" "mma2")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/MedizinMedien/bretsmac4" "mma4")
+(set_env "root" "/Users/bretweinraub/.rover/workspaces/MedizinMedien/bretsmac6" "mma6")
+(set_env "htdocs" "/usr/htdocs/MedizinMedien/bretsmac4" "mma4")
 
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/yntp/bretsmac" "yntp")
 
@@ -32,7 +35,15 @@
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/usada/bretsmac2" "usada")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/penman/bretsmac" "penman")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/penman/bretsmac2" "penman2")
+(set_env "root" "/Users/bretweinraub/.rover/workspaces/penman/bretsmac3" "penman3")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/knowledgefront/bretsmac" "knowledgefront")
+(set_env "root" "/Users/bretweinraub/.rover/workspaces/ccgcloud/bretsmac" "ccgcloud")
+(set_env "root" "/Users/bretweinraub/.rover/workspaces/ccgcloud/bretsmac2" "ccgcloud2")
+(set_env "htdocs" "/usr/htdocs/ccgcloud/bretsmac2" "ccgcloud2")
+(set_env "root" "/Users/bretweinraub/.rover/workspaces/vinca/bretsmac" "vinca")
+(set_env "root" "/Users/bretweinraub/.rover/workspaces/justculture/bretsmac" "justculture")
+(set_env "root" "/Users/bretweinraub/.rover/workspaces/justculture/justculture_com_replica" "justculture2")
+(set_env "htdocs" "/usr/htdocs/vinca/bretsmac" "vinca")
 
 (defun shell-with-command (name command accesskey)
   "Run a shell buffer with name ; and execute command with init"
@@ -53,23 +64,31 @@
   (progn
 	(setq rails-env server)
 	(setq rover-base-path (get_env "root" server))
-	(setq htdocs-base-path
-		  (substring (shell-command-to-string (concat "/bin/echo " rover-base-path "| awk -F/ '{print $(NF-1)\"/\"$NF}'")) 0 -1)
-	)))
+	(setq htdocs-base-path (get_env "htdocs" server))
+	(if (get-buffer (concat server "-shell"))
+		t
+	  (rails-start server))
+	)
+  )
 
-(defun rails-start ()
+(defun rails-start (&optional server)
   "Begin a rails interactive environment"
   (interactive)
-  (setq server (read-from-minibuffer "Search text? "))
   (if server
-      nil
-    (setq server "bright_app"))
+	  t
+	(progn (
+			(setq server (read-from-minibuffer "Search text? "))
+			(if server
+				nil
+			  (setq server "bright_app"))
+			)
+		   )
+	)
   (if (get_env "root" server)
 	  (setq rover-base-path (get_env "root" server))
 	(setq rover-base-path (concat "~/.rover/workspaces/" (getenv "ROVERENV") "/" server)))
   (setq default-directory rover-base-path)
-  (setq htdocs-base-path
-		(substring (shell-command-to-string (concat "/bin/echo " rover-base-path "| awk -F/ '{print $(NF-1)\"/\"$NF}'")) 0 -1))
+  (setq htdocs-base-path (get_env "htdocs" server))
   (progn
 	(setq rails-env server)
     (shell-with-command (concat server "-sql") (concat "cd " rover-base-path "; rails db") "S")
@@ -131,6 +150,16 @@
   "Go to the home directory of the current root"
   )
 
+(defun go-to-rover-home ()
+  (interactive)
+  (comint-send-input)
+  (insert "cd ~/dev/bitbucket/aura-rover-config")
+  (comint-send-input)
+  (comint-send-input)
+  "Go to the home directory of the current root"
+  )
+
+
 (defun go-to-rover ()
   (interactive)
   ""
@@ -168,6 +197,7 @@
 (global-set-key "C" (quote go-to-shell))
 
 (global-set-key "r" (quote go-to-rover))
+(global-set-key "R" (quote go-to-rover-home))
 (global-set-key "h" (quote go-home))
 (global-set-key "o" (quote get-project-org-file))
 (global-set-key "d" (quote go-to-db-migrate))
