@@ -19,31 +19,51 @@
 			   railshash))
   (puthash key value (gethash env railshash)))
 
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/aurabright/bretsmac/bright_app" "bright_app")
+(setq apachedocroot "/Library/WebServer/Documents/")
+
+(set_env "root" "/Users/bretweinraub/.rover/workspaces/ncmm" "ncmm")
+(set_env "htdocs" (concat apachedocroot "ncmm/bretsmac") "ncmm")
+
+(set_env "root" "/Users/bretweinraub/.rover/workspaces/careofskills" "careofskills")
+(set_env "htdocs" (concat apachedocroot "careofskills/bretsmac") "careofskills")
+
+(set_env "root" "/Users/bretweinraub/.rover/workspaces/fulcra" "fulcra")
 (set_env "root" "/Users/bretweinraub/dev/bitbucket/bright_ci/" "bright_ci")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/aurabright/bretsmac/bright-rails4" "bright4")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/bright/bretsmac" "bright")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/medtronic/bretsmac_prodcopy2" "medtronic2")
+(set_env "htdocs" (concat apachedocroot "medtronic/bretsmac_prodcopy2") "medtronic2")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/MedizinMedien/bretsmac2" "mma2")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/MedizinMedien/bretsmac4" "mma4")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/MedizinMedien/bretsmac6" "mma6")
-(set_env "htdocs" "/usr/htdocs/MedizinMedien/bretsmac4" "mma4")
+(set_env "htdocs" (concat apachedocroot "MedizinMedien/bretsmac4") "mma4")
 
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/yntp/bretsmac" "yntp")
+(set_env "root" "/Users/bretweinraub/.rover/workspaces/ynltp/ynltp_prodclone" "ynltp")
 
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/finaura/bretsmac/fin3" "finaura")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/usada/bretsmac2" "usada")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/penman/bretsmac" "penman")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/penman/bretsmac2" "penman2")
+
+(set_env "root" "/Users/bretweinraub/.rover/workspaces/aura_website/bretsmac" "aura_website")
+(set_env "htdocs" (concat apachedocroot "aura_website/bretsmac") "aura_website")
+
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/penman/bretsmac3" "penman3")
+(set_env "htdocs" (concat apachedocroot "penman/bretsmac3") "penman3")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/knowledgefront/bretsmac" "knowledgefront")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/ccgcloud/bretsmac" "ccgcloud")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/ccgcloud/bretsmac2" "ccgcloud2")
-(set_env "htdocs" "/usr/htdocs/ccgcloud/bretsmac2" "ccgcloud2")
+(set_env "htdocs" (concat apachedocroot "ccgcloud/bretsmac2") "ccgcloud2")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/vinca/bretsmac" "vinca")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/justculture/bretsmac" "justculture")
+(set_env "htdocs" (concat apachedocroot "justculture/justculture_com_replica") "justculture2")
+
+(set_env "root" "/Users/bretweinraub/.rover/workspaces/silverbullet/bretsmac" "silverbullet")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/justculture/justculture_com_replica" "justculture2")
-(set_env "htdocs" "/usr/htdocs/vinca/bretsmac" "vinca")
+(set_env "htdocs" (concat apachedocroot "justculture/justculture_com_replica") "justculture2")
+(set_env "htdocs" (concat apachedocroot "justculture/justculture_com_replica") "medtronic2")
+(set_env "htdocs" (concat apachedocroot "vinca/bretsmac") "vinca")
 
 (defun shell-with-command (name command accesskey)
   "Run a shell buffer with name ; and execute command with init"
@@ -203,25 +223,16 @@
 (global-set-key "d" (quote go-to-db-migrate))
 (global-set-key "f" (quote rails-find))
 
-(fset 'last-console-command
-   [?\C-x ?4 ?b ?i ?p ?o ?r ?t ?a ?l ?- ?c ?o ?n ?s ?o ?l ?e return escape ?> ?\M-p return ?\C-x ?o])
-
-(fset 'last-bright_app-shell-command
-   [?\C-x ?4 ?b ?i ?p ?o ?r ?t ?a ?l ?- ?s ?h ?e ?l ?l return escape ?> ?\M-p return ?\C-x ?o])
-
-(fset 'last-sql-command
-   [?\C-x ?4 ?b ?i ?p ?o ?r ?t ?a ?l ?- ?s ?q ?l return escape ?> return ?\M-p return ?\C-x ?o])
-
-
-
-
-
-(global-set-key (quote [3 f1]) (quote last-console-command))
-(global-set-key (quote [3 f2]) (quote last-sql-command))
-(global-set-key (quote [3 f3]) (quote last-bright_app-shell-command))
-
-
 (global-set-key "C" (quote go-to-shell))
+
+(defun edit-this-file ()
+  (interactive)
+  ""
+  (find-file-other-window "~/bash_profiles/bdw/emacs/rails.el" t)
+)
+
+
+(global-set-key "l" (quote edit-this-file))
 
 (fset 'last-shell-command
    [?\C-x ?4 ?b ?* ?s ?h ?e ?l ?l ?* return escape ?> return ?! ?! return])
@@ -229,4 +240,3 @@
 (global-set-key (quote [3 f4]) (quote last-shell-command))
 
 (setq ruby-deep-indent-paren nil)
-

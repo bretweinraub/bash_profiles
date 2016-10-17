@@ -532,3 +532,9 @@ alias s="sudo"
 SourceTree () {
   open -a SourceTree $(pwd)
 }
+
+
+aura-clone () {
+  git clone git@bitbucket.org:aura_software/$1.git
+}
+

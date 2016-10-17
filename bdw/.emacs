@@ -70,7 +70,7 @@
 
 (progn
   (defvar compile-command "(cd ~/dev/bitbucket/rover && ROVERENV=dev ~/dev/bitbucket/rover/bin/roverun)")
-  (defun deal-test () 
+  (defun deal-test ()
 	"deal test"
 	(interactive)
 	(compile compile-command)
@@ -173,57 +173,57 @@
 
 (global-set-key (quote [f6]) (quote insert-m80-table))
 
-(setq auto-mode-alist 
+(setq auto-mode-alist
       (append
-       (list 
+       (list
 	(cons "\\.jsp" 'sgml-mode))
        auto-mode-alist))
 
-(setq auto-mode-alist 
+(setq auto-mode-alist
       (append
-       (list 
+       (list
 	(cons "\\.dryml" 'sgml-mode))
        auto-mode-alist))
 
-(setq auto-mode-alist 
+(setq auto-mode-alist
       (append
-       (list 
+       (list
 	(cons "\\.cfm" 'java-mode))
        auto-mode-alist))
 
-(setq auto-mode-alist 
+(setq auto-mode-alist
       (append
-       (list 
+       (list
 	(cons "\\.cs" 'java-mode))
        auto-mode-alist))
 
-(setq auto-mode-alist 
+(setq auto-mode-alist
       (append
-       (list 
+       (list
 	(cons "\\.jpf" 'java-mode))
        auto-mode-alist))
 
-(setq auto-mode-alist 
+(setq auto-mode-alist
       (append
-       (list 
+       (list
 	(cons "\\.jcx" 'java-mode))
        auto-mode-alist))
 
-(setq auto-mode-alist 
+(setq auto-mode-alist
       (append
-       (list 
+       (list
 	(cons "\\.tld" 'sgml-mode))
        auto-mode-alist))
 
-(setq auto-mode-alist 
+(setq auto-mode-alist
       (append
-       (list 
+       (list
 	(cons "\\.m80" 'perl-mode))
        auto-mode-alist))
 
-(setq auto-mode-alist 
+(setq auto-mode-alist
       (append
-       (list 
+       (list
 	(cons "\\.xml" 'html-mode)
 	(cons "\\.xsd" 'html-mode)
 	(cons "\\.resx" 'html-mode)
@@ -231,9 +231,9 @@
 	)
        auto-mode-alist))
 
-(setq auto-mode-alist 
+(setq auto-mode-alist
       (append
-       (list 
+       (list
 	(cons "\\.rake" 'ruby-mode))
        auto-mode-alist))
 
@@ -254,7 +254,7 @@
   (end-of-buffer))
 
 
-(defun create-bean-property () 
+(defun create-bean-property ()
   "Hopefully will create a Java setter getter method based on the minibuffer"
   (interactive)
   (setq data-type (read-from-minibuffer "The bean property data type? "))
@@ -282,12 +282,12 @@
   (insert "\n        )")
   (ruby-indent-line)
   )
-  
+
 
 (defun create-package-header ()
   "Hopefully will create an oracle package header"
   (interactive)
-  (setq package-name (read-from-minibuffer "The package name? "))  
+  (setq package-name (read-from-minibuffer "The package name? "))
   (find-file (concat "P_" package-name ".pkg"))
   (insert "\n-- -*-sql-*- --")
   (insert "\n-----------------------------------------------------------------")
@@ -345,8 +345,8 @@
 (defun ruby-method ()
   "Create a new ruby method"
   (interactive)
-  (setq method-name (read-from-minibuffer "What is the new method name? ")) 
-  (setq args (read-from-minibuffer "What is are the args? "))  
+  (setq method-name (read-from-minibuffer "What is the new method name? "))
+  (setq args (read-from-minibuffer "What is are the args? "))
   (ruby-indent-command)
   (insert "################################################################################\n")
   (ruby-indent-command)
@@ -362,7 +362,7 @@
 (defun ruby-abstract-method ()
   "Create a new ruby abstract-method"
   (interactive)
-  (setq method-name (read-from-minibuffer "What is the new method name?"))  
+  (setq method-name (read-from-minibuffer "What is the new method name?"))
   (ruby-indent-command)
   (insert "def " method-name "(*args)\n")
   (ruby-indent-command)
@@ -378,9 +378,9 @@
 (defun create-java-class ()
   "Create a new java class"
   (interactive)
-  (setq class-name (read-from-minibuffer "What is the new class name? "))  
+  (setq class-name (read-from-minibuffer "What is the new class name? "))
   (find-file ( concat class-name ".java"))
-  (setq package-name (read-from-minibuffer "What is the package name? "))  
+  (setq package-name (read-from-minibuffer "What is the package name? "))
   (if (> (length package-name) 0)
       (insert "package " package-name ";\n")
     )
@@ -418,7 +418,7 @@
   (add-change-log-entry-other-window nil "~/r208/TTS/fixList.log")
 )
 
-(defun create-tag-property () 
+(defun create-tag-property ()
   "Hopefully will create a Java setter getter method based on the minibuffer"
   (interactive)
   (setq data-type (read-from-minibuffer "The tag property data type? "))
@@ -431,14 +431,14 @@
   (c-indent-command)
   (insert "\npublic void set"  (upcase-initials field-name) " ( String s) {")
   (if (equal data-type "int")
-      (insert field-name " = (new Integer (s)).intValue();}")      
+      (insert field-name " = (new Integer (s)).intValue();}")
       (insert field-name " = s;}")
       )
   (c-indent-command)
   (insert "\n")
 )
 
-(defun perl-here-document () 
+(defun perl-here-document ()
   "Hopefully will create a Java setter getter method based on the minibuffer"
   (interactive)
   (insert "    print OUT <<\"EOF\";\n")
@@ -446,7 +446,7 @@
   (previous-line 2)
 )
 
-(defun insert-jsp-condition () 
+(defun insert-jsp-condition ()
   ""
   (interactive)
   (insert "<% if () { %>")
@@ -515,7 +515,7 @@
 (global-set-key "" (quote quoted-insert))
 
 
-;; (defadvice switch-to-buffer (before 
+;; (defadvice switch-to-buffer (before
 ;; 			     existing-buffer
 ;; 			     activate
 ;; 			     compile)
@@ -527,14 +527,14 @@
 ;; 		      (null current-prefix-arg)))))
 
 
-(defadvice dired-find-file-other-window (before 
+(defadvice dired-find-file-other-window (before
 					 existing-buffer
 					 activate
 					 compile)
   "dont go to new window."
    (other-buffer))
 
-;; (defadvice compile (before 
+;; (defadvice compile (before
 ;; 		    compile-after-advice
 ;; 		    activate
 ;; 		    compile)
@@ -562,7 +562,7 @@ arg is set."
 				(list 'null 'current-prefix-arg))))))
 
 
-(defadvice p4-submit (before 
+(defadvice p4-submit (before
 		      existing-buffer
 		      activate
 		      compile)
@@ -607,7 +607,7 @@ arg is set."
 
 (put 'set-goal-column 'disabled nil)
 
-(defun pod-method () 
+(defun pod-method ()
   "Hopefully will create a pod header for a function"
   (interactive)
   (insert "=pod\n")
@@ -673,6 +673,24 @@ arg is set."
   (message "progn")
   (message "progn2"))
 
+(defun insert-php-function-stub ()
+  "Insert a new php function with comment block"
+  (interactive)
+  (setq function-name (read-from-minibuffer "Function Name?"))
+  (insert "/**")
+  (c-indent-command)
+  (insert "\n *")
+  (c-indent-command)
+  (insert "\n */")
+  (c-indent-command)
+  (insert "\npublic function " function-name "() {")
+  (c-indent-command)
+  (insert "\n\n}")
+  (c-indent-command)
+  (insert "\n")
+  (previous-line 2)
+  )
+
 
 (defun new-perl-method ()
   "Insert a new perl method"
@@ -701,12 +719,12 @@ arg is set."
   (interactive)
   (switch-to-buffer-other-window "*scratch*")
   )
-  
+
 
 
 (global-set-key (quote [f4]) (quote commenter))
 (global-set-key (quote [f12]) (quote go-to-scratch))
-(global-set-key (quote [C-M-f12]) (quote go-to-scratch)) 
+(global-set-key (quote [C-M-f12]) (quote go-to-scratch))
 
 (load "desktop")
 (desktop-load-default)
@@ -726,24 +744,24 @@ arg is set."
     (message "file generated from %s is %s" filename return-value)
     ;; return value of let becomes return value of strip-file-suffix
     return-value))
- 
- 
+
+
 (defun open-generated-file ()
   "opens a generated file by stripping the suffix of the current buffer and then prompting for the line in the file to seek to"
   (interactive)
   (find-file (strip-file-suffix (buffer-file-name)))
   (goto-line (string-to-number (read-from-minibuffer "Line Number? "))))
- 
- 
- 
+
+
+
 (global-set-key (quote [f11]) (quote open-generated-file))
- 
+
 
 
 (fset 'CSV-transverse
    "\C-s,\C-f\C-b\C-xo\C-s,\C-f\C-b\C-xo")
 
-(defun debug-print () 
+(defun debug-print ()
   "generate a debug-print statement"
   (interactive)
   (insert "$this->debugPrint (" (read-from-minibuffer "Level? ") ", \"\");")
@@ -849,11 +867,12 @@ arg is set."
 
 (global-set-key (quote [C-f6]) (quote restart-rails))
 
-                       
+
 
 (load-library "rails")
+(load-library "search-all-buffers")
 
-(defadvice list-and-goto-buffers (after 
+(defadvice list-and-goto-buffers (after
 				  existing-buffer
 				  activate
 				  compile)
@@ -867,8 +886,9 @@ arg is set."
 
 
 (setq indent-tabs-mode nil) ; always replace tabs with spaces
+(setq-default indent-tabs-mode nil)
 
-(setq-default tab-width 4) ; set tab width to 4 for all 
+(setq-default tab-width 4) ; set tab width to 4 for all
 (setq ruby-indent-level 2)
 
 (load-library "git")
@@ -898,6 +918,7 @@ arg is set."
 ;; The following lines are always needed.  Choose your own keys.
 
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+(add-to-list 'auto-mode-alist '("\\.csv\\'" . fundamental-mode))
 (add-hook 'org-mode-hook 'turn-on-font-lock) ; not needed when global-font-lock-mode is on
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
@@ -917,7 +938,7 @@ arg is set."
 
 
 
-(defun rover-find ()       ; Interactive version.                                                                              
+(defun rover-find ()       ; Interactive version.
   "rover-find"
   (interactive)
   (setq text (read-from-minibuffer "Search text? "))
@@ -929,17 +950,17 @@ arg is set."
 (global-set-key [C-M-f7] (quote rover-find))
 
 
-(defun fix-cd () 
-  ""
-  (interactive)
-  (insert "echo $(pwd)\n")
-  (comint-send-input)
-  (previous-line 2)
-  (insert "cd ")
-  (comint-send-input)
-  )
+;; (defun fix-cd ()
+;;   ""
+;;   (interactive)
+;;   (insert "echo $(pwd)\n")
+;;   (comint-send-input)
+;;   (previous-line 2)
+;;   (insert "cd ")
+;;   (comint-send-input)
+;;   )
 
-(global-set-key [C-M-f4] (quote fix-cd))
+(global-set-key [C-M-f4] (quote search-all-buffers))
 
 
 
@@ -988,3 +1009,21 @@ URL `http://ergoemacs.org/emacs/emacs_copy_file_path.html'"
 (load-library "php-mode")
 (add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
 (add-to-list 'auto-mode-alist '("\\.inc$" . php-mode))
+
+(fset 'irb-follow-stacktrace
+   [?\C-r ?  ?\C-? ?\C-i ?f ?r ?o ?m ?  ?\C-f ?\M-f ?\C-f ?\C-  ?\C-s ?: ?\C-b ?\M-w ?\C-x ?4 ?f ?\C-y return ?\C-x ?o ?\C-f ?\C-  ?\M-f ?\M-w ?\C-a ?\C-x ?o ?\M-x ?g ?o ?t ?o ?- ?l ?i ?n ?e return ?\C-y return ?\C-x ?o])
+
+(global-set-key "e" (quote irb-follow-stacktrace))
+
+(fset 'goto-ruby-error
+   [?\C-a ?\C-  ?\C-s ?: ?\C-b ?\M-w ?\C-x ?4 ?f ?\C-a ?\C-y ?\C-k return ?\C-x ?o ?\C-f ?\C-  ?\M-f ?\M-w ?\C-x ?o ?\M-x ?g ?o ?t ?o ?- ?l ?i ?n ?e return ?\C-y return])
+
+(global-set-key "u" (quote goto-ruby-error))
+
+(defun make-recursive-directory-writable ()
+  "recurse through the current working directory"
+  (interactive)
+  (shell-command "find . -type d |xargs sudo chmod 777 ; find . -type f |xargs sudo chmod 666" nil nil)
+  )
+
+
