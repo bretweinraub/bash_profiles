@@ -310,7 +310,7 @@ ediff () {
 
  
 
-m80chooser () { eval $(m80 --chooser);}
+# m80chooser () { eval $(m80 --chooser);}
 
 perlshell () 
 { 
@@ -328,7 +328,10 @@ m80setEnv () {
 tty=$(tty)
 
 if [ -n "${tty}" ]; then
-    eval $(m80 --genfuncs)
+    which m80
+    if [ $? -eq 0 ]; then # if m80 is in the path then....
+	eval $(m80 --genfuncs)
+    fi
 fi
 
 rebuild () {
@@ -337,7 +340,9 @@ rebuild () {
     less $*
 }
 
-numCPUs=$(awk '$1 == "processor"' < /proc/cpuinfo | wc -l | perl -nle 's/\s+//g;print')
+if [ -f /proc/cpuinfo ]; then
+    numCPUs=$(awk '$1 == "processor"' < /proc/cpuinfo | wc -l | perl -nle 's/\s+//g;print')
+fi
 
 alias pmake="make -j$numCPUs"
 
@@ -466,13 +471,26 @@ function gemdir {
   fi
 }
 
-. /home/bret/dev/bitbucket/aura-scripts/m81/m81loader.sh
+if [ -f "${HOME}/dev/bitbucket/aura-rover-config/m81/m81loader.sh" ]; then
+    . /home/bret/dev/bitbucket/aura-scripts/m81/m81loader.sh
+fi
 
 eline () {
     emacs -nw $1 --eval '(goto-line '$3')'
 }
 
+loader () {
+    while [ $# -ne 0 ]; do
+	if [ -f $1 ]; then
+	    echo -n "Loading " $1
+	    . $1
+	fi
+	shift
+    done
+}
+
 loader ~/.local ~/.localenv  ~/.$(/bin/hostname -s)
+export PATH=/usr/local/bin:$PATH
 
 setroverdb () 
 { 
@@ -538,3 +556,5 @@ aura-clone () {
   git clone git@bitbucket.org:aura_software/$1.git
 }
 
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
