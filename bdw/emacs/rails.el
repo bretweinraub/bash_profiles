@@ -21,8 +21,10 @@
 
 (setq apachedocroot "/Library/WebServer/Documents/")
 
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/ncmm" "ncmm")
+(set_env "root" "/Users/bretweinraub/.rover/workspaces/ncmm/bretsmac" "ncmm")
 (set_env "htdocs" (concat apachedocroot "ncmm/bretsmac") "ncmm")
+
+(set_env "root" "/Users/bretweinraub/.rover/workspaces/aura-store" "aura-store")
 
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/careofskills" "careofskills")
 (set_env "htdocs" (concat apachedocroot "careofskills/bretsmac") "careofskills")
@@ -31,11 +33,13 @@
 (set_env "root" "/Users/bretweinraub/dev/bitbucket/bright_ci/" "bright_ci")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/aurabright/bretsmac/bright-rails4" "bright4")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/bright/bretsmac" "bright")
+(set_env "htdocs" (concat apachedocroot "bright/bretsmac") "bright")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/medtronic/bretsmac_prodcopy2" "medtronic2")
 (set_env "htdocs" (concat apachedocroot "medtronic/bretsmac_prodcopy2") "medtronic2")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/MedizinMedien/bretsmac2" "mma2")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/MedizinMedien/bretsmac4" "mma4")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/MedizinMedien/bretsmac6" "mma6")
+(set_env "htdocs" (concat apachedocroot "MedizinMedien/bretsmac6") "mma6")
 (set_env "htdocs" (concat apachedocroot "MedizinMedien/bretsmac4") "mma4")
 
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/yntp/bretsmac" "yntp")
@@ -43,8 +47,12 @@
 
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/finaura/bretsmac/fin3" "finaura")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/usada/bretsmac2" "usada")
+(set_env "root" "/Users/bretweinraub/.rover/workspaces/usada/bretsmac3" "usada3")
+(set_env "htdocs" (concat apachedocroot "usada/bretsmac3") "usada3")
+
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/penman/bretsmac" "penman")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/penman/bretsmac2" "penman2")
+(set_env "htdocs" (concat apachedocroot "penman/bretsmac2") "penman2")
 
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/aura_website/bretsmac" "aura_website")
 (set_env "htdocs" (concat apachedocroot "aura_website/bretsmac") "aura_website")
@@ -62,7 +70,6 @@
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/silverbullet/bretsmac" "silverbullet")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/justculture/justculture_com_replica" "justculture2")
 (set_env "htdocs" (concat apachedocroot "justculture/justculture_com_replica") "justculture2")
-(set_env "htdocs" (concat apachedocroot "justculture/justculture_com_replica") "medtronic2")
 (set_env "htdocs" (concat apachedocroot "vinca/bretsmac") "vinca")
 
 (defun shell-with-command (name command accesskey)
@@ -74,50 +81,43 @@
   (condition-case nil
 	  (comint-send-input)
 	((debug error) nil))
-;;  (global-set-key (concat "" accesskey) (quote call-last-kbd-macro))
   )
 
-(defun use ()
+(defun use (&optional s &optional r)
   "Begin a rails interactive environment"
   (interactive)
-  (setq server (read-from-minibuffer "Use Envirornment? "))
-  (progn
-	(setq rails-env server)
-	(setq rover-base-path (get_env "root" server))
-	(setq htdocs-base-path (get_env "htdocs" server))
-	(if (get-buffer (concat server "-shell"))
-		t
-	  (rails-start server))
-	)
+  (if s
+      (setq server s)
+    (setq server (read-from-minibuffer "Rover Envirornment? ")))
+  (if r
+      (setq rails-env r)
+    (setq rails-env (read-from-minibuffer "Rails Envirornment? ")))
+  (if rails-env
+      t
+    (setq rails-env server))
+  (setq rover-env server)
+  (setq rover-base-path (get_env "root" server))
+  (setq htdocs-base-path (get_env "htdocs" server))
+  (setq server-base-path (get_env "root" rails-env))
+  (rails-start server rails-env)
   )
 
-(defun rails-start (&optional server)
+(defun rails-start (server rails-env)
   "Begin a rails interactive environment"
   (interactive)
-  (if server
-	  t
-	(progn (
-			(setq server (read-from-minibuffer "Search text? "))
-			(if server
-				nil
-			  (setq server "bright_app"))
-			)
-		   )
-	)
   (if (get_env "root" server)
 	  (setq rover-base-path (get_env "root" server))
 	(setq rover-base-path (concat "~/.rover/workspaces/" (getenv "ROVERENV") "/" server)))
   (setq default-directory rover-base-path)
   (setq htdocs-base-path (get_env "htdocs" server))
-  (progn
-	(setq rails-env server)
-    (shell-with-command (concat server "-sql") (concat "cd " rover-base-path "; rails db") "S")
-    (shell-with-command (concat server "-server") (concat "cd " rover-base-path "; rails s") "s")
-    (shell-with-command (concat server "-console") (concat "cd " rover-base-path "; rails c") "c")
-    (shell-with-command (concat server "-shell") (concat "cd " rover-base-path) "c")
-    (shell-with-command (concat server "-rover") (concat "cd ~/dev/bitbucket/aura-rover-config") "c")
-    (shell-with-command (concat server "-htdocs") (concat  "cd " htdocs-base-path) "H")
-    ))
+  (shell-with-command (concat rails-env "-sql") (concat "cd " server-base-path "; rails db") "S")
+  (shell-with-command (concat rails-env "-server") (concat "cd " server-base-path "; rails s") "s")
+  (shell-with-command (concat rails-env "-console") (concat "cd " server-base-path "; rails c") "c")
+  (shell-with-command (concat rails-env "-railsshell") (concat "cd " server-base-path) "r")
+  (shell-with-command (concat server "-shell") (concat "cd " rover-base-path) "c")
+  (shell-with-command (concat server "-rover") (concat "cd ~/dev/bitbucket/aura-rover-config; r " rover-env) "c")
+  (shell-with-command (concat server "-htdocs") (concat  "cd " htdocs-base-path) "H")
+  )
 
 (defun go-to-server ()
   (interactive)
@@ -130,7 +130,7 @@
 (defun go-to-htdocs ()
   (interactive)
   ""
-  (pop-to-buffer (concat rails-env "-htdocs"))
+  (pop-to-buffer (concat rover-env "-htdocs"))
   (end-of-buffer)
   (comint-previous-input 1)
 )
@@ -139,7 +139,7 @@
 (defun go-to-shell ()
   (interactive)
   ""
-  (pop-to-buffer (concat rails-env "-shell"))
+  (pop-to-buffer (concat rover-env "-shell"))
   (end-of-buffer)
   (comint-previous-input 1)
   )
@@ -158,6 +158,8 @@
   (pop-to-buffer (concat rails-env "-sql"))
   (end-of-buffer)
   (comint-previous-input 1)
+  (concat rails-env "-sql")
+  (message "%s" (concat rails-env "-sql"))
 )
 
 (defun go-home ()
@@ -173,7 +175,7 @@
 (defun go-to-rover-home ()
   (interactive)
   (comint-send-input)
-  (insert "cd ~/dev/bitbucket/aura-rover-config")
+  (insert (concat "cd ~/dev/bitbucket/aura-rover-config; r " rover-env))
   (comint-send-input)
   (comint-send-input)
   "Go to the home directory of the current root"
@@ -183,10 +185,19 @@
 (defun go-to-rover ()
   (interactive)
   ""
-  (pop-to-buffer (concat rails-env "-rover"))
+  (pop-to-buffer (concat rover-env "-rover"))
   (end-of-buffer)
   (comint-previous-input 1)
   )
+
+(defun go-to-railsshell ()
+  (interactive)
+  ""
+  (pop-to-buffer (concat rails-env "-railsshell"))
+  (end-of-buffer)
+  (comint-previous-input 1)
+  )
+
 
 (defun get-project-org-file ()
   (interactive)
@@ -217,7 +228,7 @@
 (global-set-key "C" (quote go-to-shell))
 
 (global-set-key "r" (quote go-to-rover))
-(global-set-key "R" (quote go-to-rover-home))
+(global-set-key "R" (quote go-to-railsshell))
 (global-set-key "h" (quote go-home))
 (global-set-key "o" (quote get-project-org-file))
 (global-set-key "d" (quote go-to-db-migrate))

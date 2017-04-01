@@ -32,8 +32,8 @@
   ;; use extended compound-text coding for X clipboard
   (set-selection-coding-system 'compound-text-with-extensions)
   ;; get rid of these real-estate hogs
-  (tool-bar-mode)
-  (scroll-bar-mode nil)
+  ;; (tool-bar-mode)
+  ;; (scroll-bar-mode nil)
   (menu-bar-mode nil)
   (tooltip-mode nil)
   )
@@ -43,8 +43,28 @@
 (global-set-key (quote [C-M-f9]) (quote call-last-kbd-macro))
 (global-set-key (quote [f10]) (quote hippie-expand))
 (global-set-key (quote [C-M-f10]) (quote hippie-expand))
-(global-set-key (quote [f8]) (quote compile))
-(global-set-key (quote [C-M-f8]) (quote compile))
+
+
+;; neotree
+;;
+(add-to-list 'load-path "/Users/bretweinraub/dev/github/neotree")
+
+(require 'neotree)
+(setq neo-smart-open t)
+
+(define-key neotree-mode-map (kbd "i") #'neotree-enter-horizontal-split)
+(define-key neotree-mode-map (kbd "I") #'neotree-enter-vertical-split)
+
+(global-set-key (quote [f8]) 'neotree-toggle)
+(global-set-key (quote [C-M-f8]) 'neotree-toggle)
+
+;;
+;; end neotree
+;;
+
+
+(global-set-key [C-M-f4] (quote search-all-buffers))
+(global-set-key [f4] (quote search-all-buffers))
 (global-set-key (quote [f6]) (quote hippie-expand))
 (global-set-key (quote [C-M-f6]) (quote hippie-expand))
 (global-set-key (quote [f3]) (quote font-lock-mode))
@@ -105,15 +125,6 @@
 ;;   (other-window 1)
 ;;   )
 
-(defun telcap-compile ()       ; Interactive version.
-  "the ant local compile"
-  (interactive)
-  (compile "(cd ~/main/telcap ; make den090  local)")
-  (other-window 1)
-  (end-of-buffer)
-  (other-window 1)
-  )
-
 
 (defun bvtgrid-compile ()       ; Interactive version.
   "the ant local compile"
@@ -124,10 +135,7 @@
   (other-window 1)
   )
 
-(global-set-key (quote [f4]) (quote bvtgrid-compile))
-
 ;; (global-set-key (quote [f1]) (quote ant-compile))
-
 
 
 (defun source-compile ()       ; Interactive version.
@@ -168,11 +176,6 @@
 (global-set-key (quote [f10]) (quote next-error))
 (global-set-key (quote [C-M-f10]) (quote next-error))
 
-(fset 'insert-m80-table
-   [?c ?r ?e ?a ?t ?e ?M ?8 ?0 ?S ?t ?a ?n ?d ?a ?t ?d backspace backspace ?r ?d ?T ?a ?b ?l ?e ?( ?, return ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?, return ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?\C-p ?\C-f ?( backspace backspace ?( return ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  backspace ?) ?m backspace ?m backspace ?, return ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?( ?) ?, return ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  backspace ?( ?) ?, return ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  ?) ?m ?4 ?_ ?d ?b ?n backspace backspace ?n ?l ?\; return])
-
-(global-set-key (quote [f6]) (quote insert-m80-table))
-
 (setq auto-mode-alist
       (append
        (list
@@ -202,6 +205,13 @@
        (list
 	(cons "\\.jpf" 'java-mode))
        auto-mode-alist))
+
+(setq auto-mode-alist
+      (append
+       (list
+	(cons "\\.ts" 'javascript-mode))
+       auto-mode-alist))
+
 
 (setq auto-mode-alist
       (append
@@ -582,46 +592,12 @@ arg is set."
 ;; (require 'ee-autoloads)
 
 
-(defun jims-sql-mode ()
-  "Grab the db connection from the environment. Assume ORACLE"
-  (interactive)
-  (let ((sql-user (getenv "CONTROLLER_USER"))
-        (sql-password (getenv "CONTROLLER_PASSWD"))
-        (sql-database (getenv "CONTROLLER_SID")))
-
-    (if (not (and (string= "" sql-user)
-                  (string= "" sql-password)
-                  (string= "" sql-database)))
-        (defalias 'sql-get-login 'ignore))
-        (sql-oracle)
-        (sql-rename-buffer)))
-
 (fset 'xml-format
    [?\C-s ?" ?  ?\C-b ?\C-d return tab])
 
 
-(fset 'suh
-   "\C-[%portalframw\C-?ework\C-mperfWeb\C-m!\C-x\C-s")
-(global-set-key (quote [f7]) (quote suh))
-
 
 (put 'set-goal-column 'disabled nil)
-
-(defun pod-method ()
-  "Hopefully will create a pod header for a function"
-  (interactive)
-  (insert "=pod\n")
-  (insert "\n")
-  (insert "=over 4\n")
-  (insert "\n")
-  (insert "=item \n")
-  (insert "\n")
-  (insert "=back\n")
-  (insert "\n")
-  (insert "=cut\n")
-  (previous-line 5)
-  (end-of-line)
-)
 
 (defun commenter ()
   "Comment"
@@ -635,30 +611,6 @@ arg is set."
   (delete-horizontal-space)
   (insert " ")
   (set-variable (quote goal-column) 0)
-)
-
-(defun new-perl-getopt ()
-  "Insert a new perl method"
-  (interactive)
-  (setq getopt-name (read-from-minibuffer "The argument name? "))
-  (setq description (read-from-minibuffer "Description of the argument? "))
-  (setq ref-name (read-from-minibuffer "Reference type (if any)? "))
-  (setq default (read-from-minibuffer "Default value (if any)? "))
-  (insert "\n{name => '" getopt-name "',")
-  (perl-indent-command)
-  (cond
-   ((> (length ref-name) 0)
-    (progn
-      (insert "\nref => '" ref-name "',"))
-      (perl-indent-command)))
-  (cond
-   ((> (length default) 0)
-    (progn
-      (insert "\ndefault => '" default "',"))
-      (perl-indent-command)))
-  (insert "\ndescription => '" description "',},")
-  (perl-indent-command)
-;;  (indent-region)
 )
 
 (setq description "2eee")
@@ -753,33 +705,7 @@ arg is set."
   (goto-line (string-to-number (read-from-minibuffer "Line Number? "))))
 
 
-
 (global-set-key (quote [f11]) (quote open-generated-file))
-
-
-
-(fset 'CSV-transverse
-   "\C-s,\C-f\C-b\C-xo\C-s,\C-f\C-b\C-xo")
-
-(defun debug-print ()
-  "generate a debug-print statement"
-  (interactive)
-  (insert "$this->debugPrint (" (read-from-minibuffer "Level? ") ", \"\");")
-  (perl-indent-command)
-  (insert "\n")
-  (backward-char 4)
-)
-
-(defun ruby-line (line)
-  ""
-  (insert line)
-  (ruby-indent-command)
-  (insert "\n")
-  )
-
-(defun ruby-lines (list)
-  ""
-  (mapcar ruby-line list))
 
 (defun ruby-function-header ()
   ""
@@ -796,12 +722,6 @@ arg is set."
 
 (global-set-key (quote [f7]) (quote debug-print))
 
-(fset 'compilexx
-   [f8 return ?\C-x ?4 ?b ?* ?c ?o ?m tab return escape ?> ?\C-x ?o])
-
-(global-set-key (quote [C-f8]) (quote compilexx))
-
-
 (defun rununder ()       ; Interactive version.
   "run a command under an action id"
   (interactive)
@@ -817,16 +737,9 @@ arg is set."
   (setq grep-string (read-from-minibuffer "Grep String? "))
   (grep (concat "grep -i -n -e " grep-string " *.*[a-zA-Z0-9]")))
 
-
 ;; (global-set-key (quote [f5]) (quote source-compile))
 (global-set-key (quote [f5]) (quote brep))
 (global-set-key (quote [C-M-f5]) (quote brep))
-
-
-
-
-;; This would make a good function
-;; m80 --execute make && COMMAND="./refreshMas90Table.pl -noUpdate" m80 --execute debugChassis.sh -a  137349 -c eval
 
 
 ;; this macro will save the current buffer; go to the shell buffer (assuming it  is running SQL); and run the last command.
@@ -856,21 +769,17 @@ arg is set."
    [?\C-x ?4 ?b ?* ?s ?h ?e ?l ?l ?  return ?\C-n ?\C-a ?\C-@ ?\C-s ?: ?\C-b ?\M-w ?\C-x ?4 ?f ?\C-a ?\C-y ?\C-k return ?\C-x ?o ?\C-f ?\C-  ?\M-f ?\M-w ?\C-x ?o ?\M-x ?g ?o ?t ?o ?- ?l ?i ?n ?e return ?\C-y return])
 
 
-
-
 (global-set-key (quote [C-f9]) (quote ruby-first-error))
 (global-set-key (quote [C-f10]) (quote ruby-next-error))
-
 
 (fset 'restart-rails
    [?\C-x ?4 ?b ?i ?p ?o ?r ?t ?a ?l ?- ?s ?e ?r ?v ?e ?r return escape ?> ?\C-c ?\C-c])
 
 (global-set-key (quote [C-f6]) (quote restart-rails))
 
-
-
 (load-library "rails")
 (load-library "search-all-buffers")
+(load-library "bretquote")
 
 (defadvice list-and-goto-buffers (after
 				  existing-buffer
@@ -895,7 +804,6 @@ arg is set."
 
 (add-to-list 'load-path "~/bash_profiles/bdw/emacs/color-theme-6.6.0/")
 (load-library "color-theme")
-
 
 (add-to-list 'load-path "~/geben-0.26/")
 (autoload 'geben "geben" "PHP Debugger on Emacs" t)
@@ -936,8 +844,6 @@ arg is set."
   (interactive)
   )
 
-
-
 (defun rover-find ()       ; Interactive version.
   "rover-find"
   (interactive)
@@ -945,24 +851,21 @@ arg is set."
   (find-name-dired (concat (getenv "HOME") "/dev/bitbucket/aura-rover-config") (concat "*" text "*"))
 )
 
-(global-set-key [C-M-f6] (quote find-name-dired))
+(defun file-find-current-directory ()       ; Interactive version.
+  "Searches the buffer current directory for a name "
+  (interactive)
+  (setq text (read-from-minibuffer "Search text? "))
+  (setq directory (read-from-minibuffer "Directory? " default-directory nil nil file-name-history))
+  (find-name-dired directory (concat "*" text "*"))
+)
 
-(global-set-key [C-M-f7] (quote rover-find))
 
+(global-set-key [C-M-f6] (quote find-dired))
 
-;; (defun fix-cd ()
-;;   ""
-;;   (interactive)
-;;   (insert "echo $(pwd)\n")
-;;   (comint-send-input)
-;;   (previous-line 2)
-;;   (insert "cd ")
-;;   (comint-send-input)
-;;   )
+(global-set-key [C-M-f7] (quote file-find-current-directory))
+
 
 (global-set-key [C-M-f4] (quote search-all-buffers))
-
-
 
 ;; bury *scratch* buffer instead of kill it
 (defadvice kill-buffer (around kill-buffer-around-advice activate)
@@ -1027,3 +930,31 @@ URL `http://ergoemacs.org/emacs/emacs_copy_file_path.html'"
   )
 
 
+(tool-bar-mode -1)
+
+(custom-set-variables
+ '(initial-frame-alist (quote ((fullscreen . maximized)))))
+
+(defun fix-htdocs-permissions ()
+  "fix-htdocs-permissions"
+  (interactive)
+  (shell-command "find . -type f | xargs sudo chmod 666; find . -type d | xargs sudo chmod 777" nil nil)
+  )
+
+(fset 'html-close-tag
+   [?\C-r ?< ?\C-f ?\C-  ?\M-f ?\M-w ?\C-e ?> return tab ?< ?/ ?\C-y ?> ?\C-x ?\C-x ?\C-p ?\C-e ?\C-b])
+
+(global-set-key "m" (quote html-close-tag))
+
+
+
+
+;;  Melpa Setup
+
+(require 'package) ;; You might already have this line
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/"))
+(when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+(package-initialize) ;; You might already have this line

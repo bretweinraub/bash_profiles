@@ -536,13 +536,19 @@ git-branch () {
 }
 
 git-push () {
-  echo pushing to $(git-branch)
-  git push origin $(git-branch)
+    remotes=$(git remote -v |grep '(push)'|awk '{print $1}')
+    for remote in $remotes; do
+        echo pushing to $(git-branch) on $remote
+        git push $remote $(git-branch)
+    done
 }
 
 git-pull () {
-  echo pulling from $(git-branch)
-  git pull origin $(git-branch)
+    remotes=$(git remote -v |grep '(push)'|awk '{print $1}')
+    for remote in $remotes; do
+        echo pulling from $(git-branch) on $remote
+        git pull $remote $(git-branch)
+    done
 }
 
 alias s="sudo"
