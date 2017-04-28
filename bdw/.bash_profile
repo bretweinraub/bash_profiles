@@ -543,6 +543,10 @@ git-push () {
     done
 }
 
+git-clone () {
+    git clone git@code.aura-software.com:aura/$1.git
+}
+
 git-pull () {
     remotes=$(git remote -v |grep '(push)'|awk '{print $1}')
     for remote in $remotes; do
