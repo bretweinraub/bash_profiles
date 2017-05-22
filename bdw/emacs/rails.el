@@ -32,6 +32,7 @@
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/fulcra" "fulcra")
 (set_env "root" "/Users/bretweinraub/dev/bitbucket/bright_ci/" "bright_ci")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/aurabright/bretsmac/bright-rails4" "bright4")
+(set_env "root" "/Users/bretweinraub/.rover/workspaces/aurabright/bretsmac/qna" "qna")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/bright/bretsmac" "bright")
 (set_env "htdocs" (concat apachedocroot "bright/bretsmac") "bright")
 (set_env "root" "/Users/bretweinraub/.rover/workspaces/medtronic/bretsmac_prodcopy2" "medtronic2")
