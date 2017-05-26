@@ -1,4 +1,6 @@
 
+
+
 (setq railshash (make-hash-table :test 'equal))
 
 (defun get_env (key env)
@@ -21,55 +23,55 @@
 
 (setq apachedocroot "/Library/WebServer/Documents/")
 
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/ncmm/bretsmac" "ncmm")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/ncmm/bretsmac") "ncmm")
 (set_env "htdocs" (concat apachedocroot "ncmm/bretsmac") "ncmm")
 
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/aura-store" "aura-store")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/aura-store") "aura-store")
 
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/careofskills" "careofskills")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/careofskills") "careofskills")
 (set_env "htdocs" (concat apachedocroot "careofskills/bretsmac") "careofskills")
 
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/fulcra" "fulcra")
-(set_env "root" "/Users/bretweinraub/dev/bitbucket/bright_ci/" "bright_ci")
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/aurabright/bretsmac/bright-rails4" "bright4")
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/aurabright/bretsmac/qna" "qna")
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/bright/bretsmac" "bright")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/fulcra") "fulcra")
+(set_env "root" (concat (getenv "HOME") "/dev/gitlab/bright_ci/") "bright_ci")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/aurabright/bretsmac/bright-rails4") "bright4")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/aurabright/bretsmac/qna") "qna")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/bright/bretsmac") "bright")
 (set_env "htdocs" (concat apachedocroot "bright/bretsmac") "bright")
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/medtronic/bretsmac_prodcopy2" "medtronic2")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/medtronic/bretsmac_prodcopy2") "medtronic2")
 (set_env "htdocs" (concat apachedocroot "medtronic/bretsmac_prodcopy2") "medtronic2")
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/MedizinMedien/bretsmac2" "mma2")
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/MedizinMedien/bretsmac4" "mma4")
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/MedizinMedien/bretsmac6" "mma6")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/MedizinMedien/bretsmac2") "mma2")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/MedizinMedien/bretsmac4") "mma4")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/MedizinMedien/bretsmac6") "mma6")
 (set_env "htdocs" (concat apachedocroot "MedizinMedien/bretsmac6") "mma6")
 (set_env "htdocs" (concat apachedocroot "MedizinMedien/bretsmac4") "mma4")
 
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/yntp/bretsmac" "yntp")
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/ynltp/ynltp_prodclone" "ynltp")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/yntp/bretsmac") "yntp")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/ynltp/ynltp_prodclone") "ynltp")
 
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/finaura/bretsmac/fin3" "finaura")
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/usada/bretsmac2" "usada")
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/usada/bretsmac3" "usada3")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/finaura/bretsmac/fin3") "finaura")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/usada/bretsmac2") "usada")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/usada/bretsmac3") "usada3")
 (set_env "htdocs" (concat apachedocroot "usada/bretsmac3") "usada3")
 
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/penman/bretsmac" "penman")
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/penman/bretsmac2" "penman2")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/penman/bretsmac") "penman")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/penman/bretsmac2") "penman2")
 (set_env "htdocs" (concat apachedocroot "penman/bretsmac2") "penman2")
 
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/aura_website/bretsmac" "aura_website")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/aura_website/bretsmac") "aura_website")
 (set_env "htdocs" (concat apachedocroot "aura_website/bretsmac") "aura_website")
 
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/penman/bretsmac3" "penman3")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/penman/bretsmac3") "penman3")
 (set_env "htdocs" (concat apachedocroot "penman/bretsmac3") "penman3")
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/knowledgefront/bretsmac" "knowledgefront")
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/ccgcloud/bretsmac" "ccgcloud")
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/ccgcloud/bretsmac2" "ccgcloud2")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/knowledgefront/bretsmac") "knowledgefront")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/ccgcloud/bretsmac") "ccgcloud")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/ccgcloud/bretsmac2") "ccgcloud2")
 (set_env "htdocs" (concat apachedocroot "ccgcloud/bretsmac2") "ccgcloud2")
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/vinca/bretsmac" "vinca")
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/justculture/bretsmac" "justculture")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/vinca/bretsmac") "vinca")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/justculture/bretsmac") "justculture")
 (set_env "htdocs" (concat apachedocroot "justculture/justculture_com_replica") "justculture2")
 
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/silverbullet/bretsmac" "silverbullet")
-(set_env "root" "/Users/bretweinraub/.rover/workspaces/justculture/justculture_com_replica" "justculture2")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/silverbullet/bretsmac") "silverbullet")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/justculture/justculture_com_replica") "justculture2")
 (set_env "htdocs" (concat apachedocroot "justculture/justculture_com_replica") "justculture2")
 (set_env "htdocs" (concat apachedocroot "vinca/bretsmac") "vinca")
 
@@ -116,7 +118,7 @@
   (shell-with-command (concat rails-env "-console") (concat "cd " server-base-path "; rails c") "c")
   (shell-with-command (concat rails-env "-railsshell") (concat "cd " server-base-path) "r")
   (shell-with-command (concat server "-shell") (concat "cd " rover-base-path) "c")
-  (shell-with-command (concat server "-rover") (concat "cd ~/dev/bitbucket/aura-rover-config; r " rover-env) "c")
+  (shell-with-command (concat server "-rover") (concat "cd ~/dev/gitlab/aura-rover-config; r " rover-env) "c")
   (shell-with-command (concat server "-htdocs") (concat  "cd " htdocs-base-path) "H")
   )
 
@@ -176,7 +178,7 @@
 (defun go-to-rover-home ()
   (interactive)
   (comint-send-input)
-  (insert (concat "cd ~/dev/bitbucket/aura-rover-config; r " rover-env))
+  (insert (concat "cd ~/dev/gitlab/aura-rover-config; r " rover-env))
   (comint-send-input)
   (comint-send-input)
   "Go to the home directory of the current root"
