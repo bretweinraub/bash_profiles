@@ -26,6 +26,9 @@
 (set_env "root" (concat (getenv "HOME") "/.rover/workspaces/ncmm/bretsmac") "ncmm")
 (set_env "htdocs" (concat apachedocroot "ncmm/bretsmac") "ncmm")
 
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/fishnick/bretsmac") "fishnick")
+(set_env "htdocs" (concat apachedocroot "fishnick/bretsmac") "fishnick")
+
 (set_env "root" (concat (getenv "HOME") "/.rover/workspaces/aura-store") "aura-store")
 
 (set_env "root" (concat (getenv "HOME") "/.rover/workspaces/careofskills") "careofskills")
@@ -49,9 +52,9 @@
 (set_env "root" (concat (getenv "HOME") "/.rover/workspaces/ynltp/ynltp_prodclone") "ynltp")
 
 (set_env "root" (concat (getenv "HOME") "/.rover/workspaces/finaura/bretsmac/fin3") "finaura")
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/usada/bretsmac2") "usada")
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/usada/bretsmac3") "usada3")
-(set_env "htdocs" (concat apachedocroot "usada/bretsmac3") "usada3")
+
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/usada/bretspro_prodclone") "usada")
+(set_env "htdocs" (concat apachedocroot "usada/bretspro_prodclone") "usada")
 
 (set_env "root" (concat (getenv "HOME") "/.rover/workspaces/penman/bretsmac") "penman")
 (set_env "root" (concat (getenv "HOME") "/.rover/workspaces/penman/bretsmac2") "penman2")
@@ -62,6 +65,8 @@
 
 (set_env "root" (concat (getenv "HOME") "/.rover/workspaces/penman/bretsmac3") "penman3")
 (set_env "htdocs" (concat apachedocroot "penman/bretsmac3") "penman3")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/penman/bretsmac4") "penman4")
+(set_env "htdocs" (concat apachedocroot "penman/bretsmac4") "penman4")
 (set_env "root" (concat (getenv "HOME") "/.rover/workspaces/knowledgefront/bretsmac") "knowledgefront")
 (set_env "root" (concat (getenv "HOME") "/.rover/workspaces/ccgcloud/bretsmac") "ccgcloud")
 (set_env "root" (concat (getenv "HOME") "/.rover/workspaces/ccgcloud/bretsmac2") "ccgcloud2")

@@ -1,0 +1,131 @@
+(setq js-indent-level 2)
+
+(set-variable (quote js-indent-level) 2 nil)
+(set-variable (quote indent-tabs-mode) nil nil)
+
+(global-set-key [delete] 'delete-char)
+(global-set-key [kp-delete] 'delete-char)
+
+;; turn on font-lock mode
+(global-font-lock-mode t)
+;; enable visual feedback on selections
+(setq-default transient-mark-mode t)
+
+;; always end a file with a newline
+(setq require-final-newline t)
+
+;; stop at the end of the file, not just add lines
+(setq next-line-add-newlines nil)
+
+;; emacs 23 ; use old vertical split
+(setq split-width-threshold nil)
+
+(when window-system
+  ;; enable wheelmouse support by default
+  (mwheel-install)
+  ;; use extended compound-text coding for X clipboard
+  (set-selection-coding-system 'compound-text-with-extensions)
+  ;; get rid of these real-estate hogs
+  ;; (tool-bar-mode)
+  ;; (scroll-bar-mode nil)
+  (menu-bar-mode nil)
+  (tooltip-mode nil)
+  )
+
+(global-set-key (quote [f9]) (quote call-last-kbd-macro))
+(global-set-key (quote [C-M-f9]) (quote call-last-kbd-macro))
+(global-set-key (quote [f10]) (quote hippie-expand))
+(global-set-key (quote [C-M-f10]) (quote hippie-expand))
+
+(global-set-key [C-M-f4] (quote search-all-buffers))
+(global-set-key [f4] (quote search-all-buffers))
+(global-set-key (quote [f6]) (quote hippie-expand))
+(global-set-key (quote [C-M-f6]) (quote hippie-expand))
+(global-set-key (quote [f3]) (quote font-lock-mode))
+(global-set-key (quote [C-M-f3]) (quote font-lock-mode))
+
+(fset 'scsh-eval
+   [?\C-@ ?\C-\M-b ?\M-w ?\C-x ?o ?\C-y return ?\C-x ?o ?\C-\M-f])
+
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+
+(global-set-key ":" (quote goto-line))
+
+(global-set-key (quote [f10]) (quote next-error))
+(global-set-key (quote [C-M-f10]) (quote next-error))
+
+(setq auto-mode-alist
+      (append
+       (list
+	(cons "\\.jsp" 'sgml-mode))
+       auto-mode-alist))
+
+(setq auto-mode-alist
+      (append
+       (list
+	(cons "\\.dryml" 'sgml-mode))
+       auto-mode-alist))
+
+(setq auto-mode-alist
+      (append
+       (list
+	(cons "\\.cfm" 'java-mode))
+       auto-mode-alist))
+
+(setq auto-mode-alist
+      (append
+       (list
+	(cons "\\.cs" 'java-mode))
+       auto-mode-alist))
+
+(setq auto-mode-alist
+      (append
+       (list
+	(cons "\\.jpf" 'java-mode))
+       auto-mode-alist))
+
+(setq auto-mode-alist
+      (append
+       (list
+	(cons "\\.ts" 'javascript-mode))
+       auto-mode-alist))
+
+
+(setq auto-mode-alist
+      (append
+       (list
+	(cons "\\.jcx" 'java-mode))
+       auto-mode-alist))
+
+(setq auto-mode-alist
+      (append
+       (list
+	(cons "\\.tld" 'sgml-mode))
+       auto-mode-alist))
+
+(setq auto-mode-alist
+      (append
+       (list
+	(cons "\\.m80" 'perl-mode))
+       auto-mode-alist))
+
+(setq auto-mode-alist
+      (append
+       (list
+	(cons "\\.xml" 'html-mode)
+	(cons "\\.xsd" 'html-mode)
+	(cons "\\.resx" 'html-mode)
+	(cons "\\.rhtml" 'html-mode)
+	)
+       auto-mode-alist))
+
+(setq auto-mode-alist
+      (append
+       (list
+	(cons "\\.rake" 'ruby-mode))
+       auto-mode-alist))
+
+(setq mac-option-modifier  'hyper)
+(setq mac-command-modifier 'meta)
+

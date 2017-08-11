@@ -239,10 +239,6 @@ SQL () {
     fi
 }
 
-bdwcommit () {
-    (cd ~/bdw && eval cvs commit -m \"$*\")
-}
-
 
 m80update () {
     (cd ~/m80 && eval cvsupdate)
@@ -568,3 +564,5 @@ aura-clone () {
 
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+alias be="bundle exec"

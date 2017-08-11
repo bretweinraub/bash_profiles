@@ -47,17 +47,17 @@
 
 ;; neotree
 ;;
-(add-to-list 'load-path "/Users/bretweinraub/dev/github/neotree")
+;; (add-to-list 'load-path "/Users/bretweinraub/dev/github/neotree")
 
-(require 'neotree)
-(setq neo-smart-open t)
+;; (require 'neotree)
+;; (setq neo-smart-open t)
 
-(define-key neotree-mode-map (kbd "i") #'neotree-enter-horizontal-split)
-(define-key neotree-mode-map (kbd "I") #'neotree-enter-vertical-split)
+;; (define-key neotree-mode-map (kbd "i") #'neotree-enter-horizontal-split)
+;; (define-key neotree-mode-map (kbd "I") #'neotree-enter-vertical-split)
 
-(global-set-key (quote [f8]) 'neotree-toggle)
-(global-set-key (quote [C-M-f8]) 'neotree-toggle)
-
+;; (global-set-key (quote [f8]) 'neotree-toggle)
+;; (global-set-key (quote [C-M-f8]) 'neotree-toggle)
+()
 ;;
 ;; end neotree
 ;;
@@ -779,7 +779,7 @@ arg is set."
 
 (load-library "rails")
 (load-library "search-all-buffers")
-(load-library "bretquote")
+(load-library "bretquote")()()
 
 (defadvice list-and-goto-buffers (after
 				  existing-buffer
@@ -805,8 +805,8 @@ arg is set."
 (add-to-list 'load-path "~/bash_profiles/bdw/emacs/color-theme-6.6.0/")
 (load-library "color-theme")
 
-(add-to-list 'load-path "~/geben-0.26/")
-(autoload 'geben "geben" "PHP Debugger on Emacs" t)
+;; (add-to-list 'load-path "~/geben-0.26/")
+;; (autoload 'geben "geben" "PHP Debugger on Emacs" t)
 
 ;; (speedbar-add-supported-extension ".rb")
 ;; (speedbar-add-supported-extension ".php")
@@ -837,7 +837,7 @@ arg is set."
 
 (global-unset-key "")
 
-(load "~/Downloads/nxhtml/autostart.el")
+;; (load "~/bash_profiles/bdw/emacs/nxhtml/autostart.el")
 
 (defun devplan-org ()
   "open the devplan-org file"
@@ -875,6 +875,7 @@ arg is set."
       ad-do-it)))
 
 (setq js-indent-level 2)
+(setq c-basic-offset 2)
 
 ;; http://www.emacswiki.org/emacs/IndentingJava
 (add-hook 'java-mode-hook (lambda ()
@@ -958,3 +959,7 @@ URL `http://ergoemacs.org/emacs/emacs_copy_file_path.html'"
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize) ;; You might already have this line
+
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+                         ("marmalade" . "https://marmalade-repo.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/")))
