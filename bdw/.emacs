@@ -820,6 +820,7 @@ arg is set."
 
 (load-file "~/bash_profiles/bdw/emacs/ebs.el")
 (global-set-key [C-tab] (quote ebs-switch-buffer))
+(global-set-key "." (quote ebs-switch-buffer))
 
 ;; org mode
 
