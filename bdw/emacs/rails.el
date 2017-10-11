@@ -37,6 +37,7 @@
 (set_env "root" (concat (getenv "HOME") "/.rover/workspaces/fulcra") "fulcra")
 (set_env "root" (concat (getenv "HOME") "/dev/gitlab/bright_ci/") "bright_ci")
 (set_env "root" (concat (getenv "HOME") "/.rover/workspaces/aurabright/bretsmac/bright-rails4") "bright4")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/aurabright/bretsmac/bright-rails5") "bright5")
 (set_env "root" (concat (getenv "HOME") "/.rover/workspaces/aurabright/bretsmac/qna") "qna")
 (set_env "root" (concat (getenv "HOME") "/.rover/workspaces/bright/bretsmac") "bright")
 (set_env "htdocs" (concat apachedocroot "bright/bretsmac") "bright")

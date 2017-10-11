@@ -17,7 +17,6 @@ fi
 
 alias ll="ls -l"
 alias m=less
-alias Mkdir=be
 
 Make () {
     m80 --execute make $* ; 
@@ -41,12 +40,6 @@ f () {
     find .| egrep -i '$searchStr'
 }
 
-be () {
-    mkdir -p $1
-    if [ $? -eq 0 ]; then
-	cd $1
-    fi
-}
 
 e () {
     title=${M80_DIRECTORY_SELECTED}:${M80_BDF}
@@ -99,7 +92,6 @@ news () {
 
 alias ll="ls -l"
 alias m=less
-alias Mkdir=be
 alias reload=". ~/.profile"
 alias hg='history | grep'
 alias sshterm='rxvt --geometry 100x40 -e /bin/bash --login -i &'
@@ -111,13 +103,6 @@ alias renwix="ssh -l bret renwix.com"
 f () {
     searchStr=${1:-.};
     find .|grep -i $searchStr
-}
-
-be () {
-    mkdir -p $1
-    if [ $? -eq 0 ]; then
-	cd $1
-    fi
 }
 
 
