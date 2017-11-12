@@ -1,9 +1,5 @@
 (setq ruby-indent-level 2)
 
-(load-library "bw/rails")
-(load "bw/enhanced-ruby.el")
-
-
 ;;  (require 'highlight-indentation)
 
 (setq highlight-indent-guides-method 'character)
