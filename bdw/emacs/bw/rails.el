@@ -1,6 +1,5 @@
 
 
-
 (setq railshash (make-hash-table :test 'equal))
 
 (defun get_env (key env)
@@ -38,7 +37,8 @@
 (set_env "root" (concat (getenv "HOME") "/dev/gitlab/bright_ci/") "bright_ci")
 (set_env "root" (concat (getenv "HOME") "/.rover/workspaces/aurabright/bretsmac/bright-rails4") "bright4")
 (set_env "root" (concat (getenv "HOME") "/.rover/workspaces/aurabright/bretsmac/bright-rails5") "bright5")
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/aurabright/bretsmac/qna") "qna")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/meteor5/bretsmac/meteor5") "meteor5")
+(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/bright/bretsmac/qna") "qna")
 (set_env "root" (concat (getenv "HOME") "/.rover/workspaces/bright/bretsmac") "bright")
 (set_env "htdocs" (concat apachedocroot "bright/bretsmac") "bright")
 (set_env "root" (concat (getenv "HOME") "/.rover/workspaces/medtronic/bretsmac_prodcopy2") "medtronic2")
@@ -128,10 +128,21 @@
   (shell-with-command (concat server "-htdocs") (concat  "cd " htdocs-base-path) "H")
   )
 
+(defun rails-pop-tobuffer (buff)
+  (interactive)
+  ;;
+
+  (setq foo (current-buffer))
+  (delete-other-windows)
+  (pop-to-buffer buff)
+  (switch-to-buffer-other-window foo)
+  (other-window 1)
+  )
+
 (defun go-to-server ()
   (interactive)
   ""
-  (pop-to-buffer (concat rails-env "-server"))
+  (rails-pop-tobuffer (concat rails-env "-server"))
   (end-of-buffer)
   (comint-previous-input 1)
 )
@@ -139,7 +150,7 @@
 (defun go-to-htdocs ()
   (interactive)
   ""
-  (pop-to-buffer (concat rover-env "-htdocs"))
+  (rails-pop-tobuffer (concat rover-env "-htdocs"))
   (end-of-buffer)
   (comint-previous-input 1)
 )
@@ -148,7 +159,7 @@
 (defun go-to-shell ()
   (interactive)
   ""
-  (pop-to-buffer (concat rover-env "-shell"))
+  (rails-pop-tobuffer (concat rover-env "-shell"))
   (end-of-buffer)
   (comint-previous-input 1)
   )
@@ -156,7 +167,9 @@
 (defun go-to-console ()
   (interactive)
   ""
-  (pop-to-buffer (concat rails-env "-console"))
+  (if (get-buffer "*rails*")
+    (rails-pop-tobuffer (get-buffer "*rails*"))
+    (rails-pop-tobuffer (concat rails-env "-console")))
   (end-of-buffer)
   (comint-previous-input 1)
 )
@@ -164,11 +177,12 @@
 (defun go-to-sql ()
   (interactive)
   ""
-  (pop-to-buffer (concat rails-env "-sql"))
+  (rails-pop-tobuffer (concat rails-env "-sql"))
   (end-of-buffer)
   (comint-previous-input 1)
   (concat rails-env "-sql")
   (message "%s" (concat rails-env "-sql"))
+
 )
 
 (defun go-home ()
@@ -194,7 +208,7 @@
 (defun go-to-rover ()
   (interactive)
   ""
-  (pop-to-buffer (concat rover-env "-rover"))
+  (rails-pop-tobuffer (concat rover-env "-rover"))
   (end-of-buffer)
   (comint-previous-input 1)
   )
@@ -202,7 +216,7 @@
 (defun go-to-railsshell ()
   (interactive)
   ""
-  (pop-to-buffer (concat rails-env "-railsshell"))
+  (rails-pop-tobuffer (concat rails-env "-railsshell"))
   (end-of-buffer)
   (comint-previous-input 1)
   )
@@ -251,8 +265,7 @@
   (find-file-other-window "~/bash_profiles/bdw/emacs/rails.el" t)
 )
 
-
-(global-set-key "l" (quote edit-this-file))
+;; (global-set-key "l" (quote edit-this-file))
 
 (fset 'last-shell-command
    [?\C-x ?4 ?b ?* ?s ?h ?e ?l ?l ?* return escape ?> return ?! ?! return])
@@ -260,3 +273,26 @@
 (global-set-key (quote [3 f4]) (quote last-shell-command))
 
 (setq ruby-deep-indent-paren nil)
+
+
+    ;; def open(*args)
+    ;;   url = server_url
+    ;;   if args[0] && arg1 = args.shift[:arg1]
+    ;;     if arg1.match /^bright/
+    ;;       url += "/wp-admin/admin.php?page=#{arg1}"
+    ;;     end
+    ;;   end
+
+    ;;   system('open -a /Applications/Google\ Chrome.app ' + url)
+;; end
+
+
+;; (shell-command "open -a /Applications/Google\ Chrome.app localhost:3000")
+
+;; (shell-command "open -a /Applications/Google\ Chrome.app")
+
+; (setq browse-url-browser-function 'browse-url-chromium)
+
+; (setq browse-url-browser-function nil)
+
+; (browse-url "localhost:3000")

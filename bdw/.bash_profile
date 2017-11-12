@@ -1,5 +1,6 @@
-
-. ~/.bashrc
+if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+fi
 
 alias c="clear"
 alias x="chmod +x "
@@ -41,19 +42,18 @@ f () {
 }
 
 
+# e () {
+#     title=${M80_DIRECTORY_SELECTED}:${M80_BDF}    
+#     (cask --path $HOME/bash_profiles/bdw/emacs emacs -cr gold --title $title -bg $BG_COLOR -fg $FG_COLOR -geometry 160x75+0 --no-splash $* &)
+# }
+
 e () {
-    title=${M80_DIRECTORY_SELECTED}:${M80_BDF}
-    (emacs -cr gold --title $title -bg $BG_COLOR -fg $FG_COLOR -geometry 160x75+0 --no-splash $* &)
+#    echo cask --path $HOME/.emacs.d emacs -cr gold  -bg SlateBlue4  -fg white -g 250x70 --no-splash --name $(basename $(pwd))
+    #    (cask --path $HOME/.emacs.d emacs -cr gold  -bg SlateBlue4  -fg white -g 250x70 --no-splash --name $(basename $(pwd)) $* &)
+    emacs -cr gold  -bg SlateBlue4  -fg white -g 250x70 --no-splash --name $(basename $(pwd)) $* &
 }
 
-erails () {
-    if [ -z "${M80_BDF}" ]; then
-	echo "this makes no sense when \$M80_BDF is not set"
-    else
-	e -f rails-start
-    fi
-}
-    
+
 
 E () {
     ( /usr/bin/emacs -cr gold -bg $BG_COLOR -fg $FG_COLOR -geometry 160x75+0 $* &)
@@ -75,18 +75,6 @@ dict () {
 news () {
  lynx -nocolor -accept_all_cookies http://news.google.com/news/gnmainlite.html
 }
-
-- () {
-    cd ..
-}
-
--- () {
-    - ; -
-}
---- () {
-    - ; - ; -
-}
-
 
 #setVar CVSROOT :ext:bret@renwix.com:/home/sites/95264840/users/bret/cvsroot
 
@@ -130,11 +118,11 @@ news () {
     - ; -
 }
 --- () {
-    - ; - ; -
+    -- ; -
 }
 
 ---- () {
-    - ; - ; - ; -
+    -- ; --
 }
 
 dinstall () {
@@ -551,3 +539,40 @@ aura-clone () {
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 alias be="bundle exec"
+
+if [[ -x "/usr/local/m80-0.07/bin/m80" ]]; then
+    export PATH=/usr/local/m80-0.07/bin:$PATH
+    . /Users/bweinraub/dev/github/m81/m81loader.sh
+fi
+
+PROGNAME=${0##*/}
+
+printmsg () {
+    if [ -z "${QUIET}" ]; then
+        if [ $# -ge 1 ]; then
+            /bin/echo -n ${M80_OVERRIDE_DOLLAR0:-$PROGNAME}:\($$\) >&2
+                while [ $# -gt 0 ]; do /bin/echo -n " "$1 >&2 ; shift ; done
+                if [ -z "${M80_SUPRESS_PERIOD}" ]; then
+                    echo . >&2
+                else
+                    echo >&2
+                fi
+        fi
+    fi
+}
+
+
+conditionally_add_path () {
+    while [ $# -gt 0 ]; do
+	dir=$1
+	shift
+	if [ -d $dir ]; then
+	    export PATH=$dir:$PATH
+	else
+	    printmsg  No such directory $dir
+	fi
+    done
+}
+
+# conditionally_add_path "$HOME/.cask/bin"
+

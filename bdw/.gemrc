@@ -1,12 +1,10 @@
---- 
-:update_sources: true
-:sources: 
+---
+:backtrace: true
+:bulk_threshold: 1000
+:sources:
 - http://rubygems.org/
 - http://gems.github.com
 - http://gemcutter.org
-- http://gemcutter.org
-gem: --no-rdoc --no-ri
-:bulk_threshold: 1000
+:update_sources: true
 :verbose: true
-:backtrace: true
-
+gem: "--no-rdoc --no-ri --document=yri"

@@ -1,0 +1,38 @@
+;; Built using https://crypt.codemancers.com/posts/2013-09-26-setting-up-emacs-as-development-environment-on-osx/
+
+
+;;  brew install emacs --use-git-head --with-cocoa --srgb
+;; brew install cask
+
+(setq mac-option-modifier  'hyper)
+(setq mac-command-modifier 'meta)
+
+;; emacs 23 ; use old vertical split
+(setq split-width-threshold nil)
+
+;; all hail WindMove!
+;; https://www.emacswiki.org/emacs/WindMove
+
+(when (fboundp 'windmove-default-keybindings)
+  (windmove-default-keybindings))
+
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (rvm robe php-mode neotree enh-ruby-mode ac-inf-ruby))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
