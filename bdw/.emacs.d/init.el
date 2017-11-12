@@ -32,11 +32,10 @@
  )
 
 
-(setq load-path (cons "~" (cons "~/bash_profiles/bdw/emacs" load-path)))
-(setq load-path (cons "~/bash_profiles/bdw/emacs/contrib" load-path))
+(setq load-path (cons "~/.emacs.d/contrib" load-path))
 (require 'cask "/usr/local/share/emacs/site-lisp/cask/cask.el")
 (cask-initialize)
 
 (global-set-key (kbd "C-c k") 'compile)
 
-(load-file "~/bash_profiles/bdw/load-files.el")
+(load-file "contrib/load-files.el")

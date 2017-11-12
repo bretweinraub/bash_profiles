@@ -4,7 +4,6 @@
 ;; (defun load-files-in-dir (dir)
 ;;   ;; searches for .el files in a directory and loads any files in there.
 ;;   ;; for example:
-;;   ;;  (load-files-in-dir "~/bash_profiles/bdw/emacs/scripts-enabled")
 ;;   (setq list (directory-files dir t "\.el$" t)) ; https://www.gnu.org/software/emacs/manual/html_node/elisp/Contents-of-Directories.html
 ;;   (setq filename (car list))
 ;;   (while list
@@ -24,7 +23,6 @@
 (defun load-files-in-dir (dir)
   ;; searches for .el files in a directory and loads any files in there.
   ;; for example:
-  ;;  (load-files-in-dir "~/bash_profiles/bdw/emacs/scripts-enabled")
 
   (let* (
 	 (list (directory-files dir t "\.el$" t)) ; https://www.gnu.org/software/emacs/manual/html_node/elisp/Contents-of-Directories.html
@@ -44,7 +42,7 @@
     )
   )
 
-(load-files-in-dir "~/bash_profiles/bdw/emacs/scripts-enabled")
+(load-files-in-dir "~/.emacs.d/scripts-enabled")
 
 
 

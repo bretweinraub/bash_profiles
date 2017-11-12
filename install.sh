@@ -258,12 +258,24 @@ checkfile -d $profile
 
 docmd cd ~
 
+deprecate () {
+    while [ $# -gt 0 ]; do 
+	file=$1
+	shift
+
+	if [ -e ${file} -a -h ${file} ]; then
+	    cleanup 1 "Found ${file} relic, which is now deprecated.   Move it away and try again."
+	fi
+    done
+}
+
 
 funcy () {
     while [ $# -gt 0 ]; do 
 	file=$1
 	shift
 	if [ -e ${file} ];  then
+	    printmsg "Existing ${file} found.   Note, it is being moved to a .bak file!"
 	    docmd mv ${file} ${file}.bak.$$
 	fi
 
@@ -275,7 +287,9 @@ funcy () {
     done
 }
 
-funcy .profile .emacs .emacs_bash .m80directory .gemrc .gitk .bash_profile
+deprecate .emacs
+
+funcy .profile .emacs.d .emacs_bash .m80directory .gemrc .gitk .bash_profile
 
 
 cleanup 0
