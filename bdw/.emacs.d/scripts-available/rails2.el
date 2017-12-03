@@ -1,3 +1,6 @@
+
+(eval-when-compile (require 'subr-x))
+
 (setq Bright-dict (make-hash-table :test 'equal))
 
 (assert (eq (boundp 'Bright-dict) t))
@@ -8,9 +11,7 @@
 (assert (eq (Bright-dict-finder) Bright-dict))
 
 (defun Bright-get-nested-hash (key &optional dict)
-  (let (
-	(*dict (Bright-dict-finder dict))
-	)
+  (let ((*dict (Bright-dict-finder dict)))
     (or  (gethash key *dict)
 	 ;; create the nested hash if it doesn't exist
 	 (puthash key (make-hash-table :test 'equal) *dict))))
@@ -27,20 +28,17 @@
   (puthash key value (Bright-get-nested-hash env))
   (message (concat "Wrote " env " -> " key " -> " value )))
 
-(Bright-set-dict "ncmm" "rooty" "fooy")
-(Bright-fetch-dict "rooty" "ncmm")
-
 ;; apachedocroot
 (if (equal system-type 'darwin)
     (setq apachedocroot "/Library/WebServer/Documents/")
   (setq apachedocroot "/var/www/"))
 
 
-(setq user-home (getenv "HOME"))
-(setq workspace-home (concat user-home "/.rover/workspaces/"))
+(setq Bright-user-home (getenv "HOME"))
+(setq Bright-workspace-home (concat Bright-user-home "/.rover/workspaces/"))
 
-(setq Bright-rails-list (list (cons "rails5" (concat workspace-home "aurabright/bretsmac/bright-rails5"))
-			      (cons "fin3" (concat workspace-home "finaura/bretsmac/fin3"))))
+(setq Bright-rails-list (list (cons "rails5" (concat Bright-workspace-home "aurabright/bretsmac/bright-rails5"))
+			      (cons "fin3" (concat Bright-workspace-home "finaura/bretsmac/fin3"))))
 
 ;;
 (defun Bright-ido-assoc (assoc-list &optional prompt)
@@ -54,16 +52,19 @@
 (defun Bright-full-setup (env &optional rails-env)
   (let ((rails-env (or rails-env
 		       "rails5")))
-    (Bright-set-dict env "gitroot" (concat workspace-home env))
+    (Bright-set-dict env "rails-env" rails-env)
+    (Bright-set-dict env "gitroot" (concat Bright-workspace-home env))
     (Bright-set-dict env "htdocs" (concat apachedocroot env))
     (Bright-set-dict env "railsroot" (cdr (assoc rails-env Bright-rails-list)))))
 
-(defun Bright-simple-setup (env )
-  (Bright-full-setup (concat env "/" "bretsmac")))
+(defun Bright-simple-setup (env &optional rails-env)
+  (Bright-full-setup (concat env "/" "bretsmac") rails-env))
 
 (mapcar (lambda(env)
 	  (Bright-simple-setup env))
 	'("ncmm" "fishnick" "careofskills"))
+
+(Bright-simple-setup "fin3" "fin3")
 
 (defun Bright-use (&optional env)
   (interactive)
@@ -76,7 +77,7 @@
 	      (global-set-key (kbd (concat "C-c " key))
 			      (lambda ()
 				(interactive)
-				(Bright-start name t key)))))
+				(Bright-start name t)))))
 	  '(
 	    ("S" . "sql")
 	    ("c" . "console")
@@ -107,7 +108,7 @@
 different environments.
 "
   (if (member title '("sql" "server" "railshell" "console"))
-      (concat "rails-" title)
+      (concat (Bright-fetch-dict "rails-env" Bright-env-in-use) "-" title)
     (concat env "-" title)))
 
 (defun Bright-pop-to-buffer(buffer-title &optional command-list)
@@ -119,27 +120,7 @@ different environments.
     (shell buffer-title))
   (Bright-run-commands command-list))  
 
-(defun Bright-process-access-key(access-key buffer-title)
-  (Bright-get-env-in-use)
-  (if (and buffer-title
-	   (get-buffer buffer-title))
-      (Bright-pop-to-buffer buffer-title)
-    ;; no buffer yet
-    (if (eq access-key "S")
-	(Bright-start "sql" t "S"))
-    (if (eq access-key "s")
-	(Bright-start "server" t "s"))
-    (if (eq access-key "C")
-	(Bright-start "shell" t "C"))
-    (if (eq access-key "c")
-	(Bright-start "console" t "c"))
-    (if (eq access-key "H")
-	(Bright-start "htdocs" t "H"))
-    (if (eq access-key "r")
-	(Bright-start "rover" t "r"))
-))
-    
-(defun Bright-shell-with-command(title command-list do-commands &optional access-key)
+(defun Bright-shell-with-command(title command-list do-commands)
   "Create (or pop-to) a buffer, execute a set of commands (if set), and define a hot key
 to pop to it [also if set]"
   (lexical-let* ((env (Bright-get-env-in-use))
@@ -154,9 +135,7 @@ to pop to it [also if set]"
 	(shell buffer-title)
 	(Bright-run-commands command-list)
 	))
-    (if access-key
-	(global-set-key (kbd (concat "C-c " access-key)) (lambda () (interactive) (pop-to-buffer buffer-title)))
-      )))
+    ))
 
 (setq Bright-shell-type-env '(("sql"       . "railsroot")
 			      ("server"    . "railsroot")
@@ -184,12 +163,7 @@ to pop to it [also if set]"
     (append command-list (gethash shell-type Bright-additional-shell-commands))))
 
 
-(defun Bright-start (shell-type do-commands &optional access-key)
+(defun Bright-start (shell-type do-commands)
   "Takes an argument of the shell type to start"
-  (Bright-shell-with-command shell-type (Bright-get-command-list shell-type) do-commands access-key) ; nil -> access_key
+  (Bright-shell-with-command shell-type (Bright-get-command-list shell-type) do-commands) ; nil -> access_key
   )
-
-(global-set-key (kbd "C-c S")
-		(lambda ()
-		  (interactive)
-		  (Bright-start "sql" t "S")))		  
