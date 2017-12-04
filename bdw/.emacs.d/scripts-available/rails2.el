@@ -27,19 +27,6 @@
   "Bright-set-dict"
   (puthash key value (Bright-get-nested-hash env))
   (message (concat "Wrote " env " -> " key " -> " value )))
-
-;; apachedocroot
-(if (equal system-type 'darwin)
-    (setq apachedocroot "/Library/WebServer/Documents/")
-  (setq apachedocroot "/var/www/"))
-
-
-(setq Bright-user-home (getenv "HOME"))
-(setq Bright-workspace-home (concat Bright-user-home "/.rover/workspaces/"))
-
-(setq Bright-rails-list (list (cons "rails5" (concat Bright-workspace-home "aurabright/bretsmac/bright-rails5"))
-			      (cons "fin3" (concat Bright-workspace-home "finaura/bretsmac/fin3"))))
-
 ;;
 (defun Bright-ido-assoc (assoc-list &optional prompt)
   "Prompt [or take a prompt] to select from an assoc list, and return the result
@@ -59,8 +46,10 @@
     (Bright-set-dict env "htdocs" (concat apachedocroot env))
     (Bright-set-dict env "railsroot" (cdr (assoc rails-env Bright-rails-list)))))
 
-(defun Bright-simple-setup (env &optional env-name &optional rails-env)
-  (Bright-full-setup (concat env "/" (or env-name "bretsmac")) rails-env))
+(defun Bright-simple-setup (customer-name &optional env-name &optional rails-env)
+  "
+\(fn CUSTOMER-NAME &optional ENV-NAME &optional RAILS-ENV)"
+  (Bright-full-setup (concat customer-name "/" (or env-name "bretsmac")) rails-env))
 
 (defun Bright-use (&optional env)
   (interactive)
@@ -145,10 +134,18 @@ to pop to it [also if set]"
 (setq Bright-additional-shell-commands
       (make-hash-table :test 'equal))
 
-(puthash "sql" '("PAGER=cat rails db") Bright-additional-shell-commands)
-(puthash "server" '("rails s") Bright-additional-shell-commands)
-(puthash "console" '("rails c") Bright-additional-shell-commands)
-					; (puthash "rover" list(concat("eval $(r " ))
+
+
+(defun Bright-get-additional-commands-for-sql ()
+  (list "PAGER=cat rails db"))
+
+(defun Bright-get-additional-commands-for-server ()
+  (list 
+   (if (equal (Bright-get-env-in-use) "fin3/bretsmac")
+       "rails s -p 3001"
+     "rails s")
+   ))
+
 
 (defun Bright-get-additional-commands-for-rover ()
   "Extensions for Rover shell type.  Must return a list"
@@ -168,7 +165,6 @@ to pop to it [also if set]"
 	    (if (functionp extension-function)
 		(funcall (symbol-function extension-function))))))
 
-
 (defun Bright-get-command-list (shell-type)
   (append (list
    (concat "cd " (Bright-shell-root  shell-type))
@@ -181,16 +177,24 @@ to pop to it [also if set]"
   (Bright-shell-with-command shell-type (Bright-get-command-list shell-type) do-commands) ; nil -> access_key
   )
 
-;;
 
-;; local setup
+;; apachedocroot
+(if (equal system-type 'darwin)
+    (setq apachedocroot "/Library/WebServer/Documents/")
+  (setq apachedocroot "/var/www/"))
+
+
+(setq Bright-user-home (getenv "HOME"))
+(setq Bright-workspace-home (concat Bright-user-home "/.rover/workspaces/"))
+
+(setq Bright-rails-list (list (cons "rails5" (concat Bright-workspace-home "aurabright/bretsmac/bright-rails5"))
+			      (cons "fin3" (concat Bright-workspace-home "fin3/bretsmac/fin3"))))
+
 
 (mapcar (lambda(env)
 	  (Bright-simple-setup env))
 	'("ncmm" "fishnick" "careofskills" "medtronic"))
 
 (Bright-simple-setup "fin3" "bretsmac" "fin3")
+(Bright-simple-setup "justculture" "justculture_com_replica")
 (Bright-simple-setup "penman" "bretsmac4")
-
-(Bright-start "rover" t)
-

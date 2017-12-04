@@ -1,85 +1,108 @@
 
+;; Bright Environment Shell for Emacs
+;;
+;; Manages launching shells for various aspects of Bright development.
+;;
+;; bright.el
+;;
 
-(setq railshash (make-hash-table :test 'equal))
+(setq bright-dict (make-hash-table :test 'equal))
 
-(defun get_env (key env)
-  "get_env"
+(defun bright-fetch-dict (key env)
+  "bright-fetch-dict"
   (interactive)
-  (gethash key
-		   (gethash env
-			railshash)
-		   )
+  (gethash key (gethash env bright-dict))
   )
 
-(defun set_env (key value env)
-  "set_env"
-  (if (gethash env railshash)
-	  railshash
-	  (puthash env 
-			   (make-hash-table :test 'equal)
-			   railshash))
-  (puthash key value (gethash env railshash)))
 
-(setq apachedocroot "/Library/WebServer/Documents/")
+(defun bright-set-dict (key value env)
+  "bright-set-dict"
+  (if (gethash env bright-dict)
+      bright-dict
+    ;; create the nested hash if it doesn't exist     
+    (puthash env 
+	     (make-hash-table :test 'equal)
+	     bright-dict))
+  ;; set the value
+  (progn
+    (puthash key value (gethash env bright-dict))
+    (message (concat "Wrote " env " -> " key " -> " value ))
+    )
+  )
 
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/ncmm/bretsmac") "ncmm")
-(set_env "htdocs" (concat apachedocroot "ncmm/bretsmac") "ncmm")
+;; apachedocroot
+(if (equal system-type 'darwin)
+    (setq apachedocroot "/Library/WebServer/Documents/")
+  (setq apachedocroot "/var/www/"))
 
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/fishnick/bretsmac") "fishnick")
-(set_env "htdocs" (concat apachedocroot "fishnick/bretsmac") "fishnick")
 
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/aura-store") "aura-store")
+(defun bright-full-setup (env default-env)
+  ;; example (bright-full-setup "ncmm" "bretsmac")
+  ;; $HOME/.rover/workspaces/$ENV/bretsmac
+  (bright-set-dict "root" (concat (getenv "HOME")
+				  "/.rover/workspaces/" env
+				  "/" default-env) env)
+  ;; $WEBROOT/bretsmac/$ENV
+  (bright-set-dict "htdocs" (concat apachedocroot env "/" default-env) 
+		   env)
+  )
 
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/careofskills") "careofskills")
-(set_env "htdocs" (concat apachedocroot "careofskills/bretsmac") "careofskills")
 
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/fulcra") "fulcra")
-(set_env "root" (concat (getenv "HOME") "/dev/gitlab/bright_ci/") "bright_ci")
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/aurabright/bretsmac/bright-rails4") "bright4")
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/aurabright/bretsmac/bright-rails5") "bright5")
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/meteor5/bretsmac/meteor5") "meteor5")
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/bright/bretsmac/qna") "qna")
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/bright/bretsmac") "bright")
-(set_env "htdocs" (concat apachedocroot "bright/bretsmac") "bright")
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/medtronic/bretsmac_prodcopy2") "medtronic2")
-(set_env "htdocs" (concat apachedocroot "medtronic/bretsmac_prodcopy2") "medtronic2")
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/MedizinMedien/bretsmac2") "mma2")
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/MedizinMedien/bretsmac4") "mma4")
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/MedizinMedien/bretsmac6") "mma6")
-(set_env "htdocs" (concat apachedocroot "MedizinMedien/bretsmac6") "mma6")
-(set_env "htdocs" (concat apachedocroot "MedizinMedien/bretsmac4") "mma4")
+(bright-full-setup "ncmm" "bretsmac")
 
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/yntp/bretsmac") "yntp")
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/ynltp/ynltp_prodclone") "ynltp")
+(mapcar ( lambda(env-name)
+	  (bright-full-setup env-name "bretsmac" ) )
+	'("ncmm" "fishnick" "careofskills"))
 
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/finaura/bretsmac/fin3") "finaura")
+;;
 
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/usada/bretspro_prodclone") "usada")
-(set_env "htdocs" (concat apachedocroot "usada/bretspro_prodclone") "usada")
 
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/penman/bretsmac") "penman")
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/penman/bretsmac2") "penman2")
-(set_env "htdocs" (concat apachedocroot "penman/bretsmac2") "penman2")
+(bright-set-dict "root" (concat (getenv "HOME") "/.rover/workspaces/fulcra") "fulcra")
+(bright-set-dict "root" (concat (getenv "HOME") "/dev/gitlab/bright_ci/") "bright_ci")
+(bright-set-dict "root" (concat (getenv "HOME") "/.rover/workspaces/aurabright/bretsmac/bright-rails4") "bright4")
+(bright-set-dict "root" (concat (getenv "HOME") "/.rover/workspaces/aurabright/bretsmac/bright-rails5") "bright5")
+(bright-set-dict "root" (concat (getenv "HOME") "/.rover/workspaces/meteor5/bretsmac/meteor5") "meteor5")
+(bright-set-dict "root" (concat (getenv "HOME") "/.rover/workspaces/bright/bretsmac/qna") "qna")
+(bright-set-dict "root" (concat (getenv "HOME") "/.rover/workspaces/bright/bretsmac") "bright")
+(bright-set-dict "htdocs" (concat apachedocroot "bright/bretsmac") "bright")
+(bright-set-dict "root" (concat (getenv "HOME") "/.rover/workspaces/medtronic/bretsmac_prodcopy2") "medtronic2")
+(bright-set-dict "htdocs" (concat apachedocroot "medtronic/bretsmac_prodcopy2") "medtronic2")
+(bright-set-dict "root" (concat (getenv "HOME") "/.rover/workspaces/MedizinMedien/bretsmac2") "mma2")
+(bright-set-dict "root" (concat (getenv "HOME") "/.rover/workspaces/MedizinMedien/bretsmac4") "mma4")
+(bright-set-dict "root" (concat (getenv "HOME") "/.rover/workspaces/MedizinMedien/bretsmac6") "mma6")
+(bright-set-dict "htdocs" (concat apachedocroot "MedizinMedien/bretsmac6") "mma6")
+(bright-set-dict "htdocs" (concat apachedocroot "MedizinMedien/bretsmac4") "mma4")
 
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/aura_website/bretsmac") "aura_website")
-(set_env "htdocs" (concat apachedocroot "aura_website/bretsmac") "aura_website")
+(bright-set-dict "root" (concat (getenv "HOME") "/.rover/workspaces/yntp/bretsmac") "yntp")
+(bright-set-dict "root" (concat (getenv "HOME") "/.rover/workspaces/ynltp/ynltp_prodclone") "ynltp")
 
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/penman/bretsmac3") "penman3")
-(set_env "htdocs" (concat apachedocroot "penman/bretsmac3") "penman3")
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/penman/bretsmac4") "penman4")
-(set_env "htdocs" (concat apachedocroot "penman/bretsmac4") "penman4")
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/knowledgefront/bretsmac") "knowledgefront")
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/ccgcloud/bretsmac") "ccgcloud")
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/ccgcloud/bretsmac2") "ccgcloud2")
-(set_env "htdocs" (concat apachedocroot "ccgcloud/bretsmac2") "ccgcloud2")
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/vinca/bretsmac") "vinca")
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/justculture/bretsmac") "justculture")
-(set_env "htdocs" (concat apachedocroot "justculture/justculture_com_replica") "justculture2")
+(bright-set-dict "root" (concat (getenv "HOME") "/.rover/workspaces/finaura/bretsmac/fin3") "finaura")
 
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/silverbullet/bretsmac") "silverbullet")
-(set_env "root" (concat (getenv "HOME") "/.rover/workspaces/justculture/justculture_com_replica") "justculture2")
-(set_env "htdocs" (concat apachedocroot "justculture/justculture_com_replica") "justculture2")
-(set_env "htdocs" (concat apachedocroot "vinca/bretsmac") "vinca")
+(bright-set-dict "root" (concat (getenv "HOME") "/.rover/workspaces/usada/bretspro_prodclone") "usada")
+(bright-set-dict "htdocs" (concat apachedocroot "usada/bretspro_prodclone") "usada")
+
+(bright-set-dict "root" (concat (getenv "HOME") "/.rover/workspaces/penman/bretsmac") "penman")
+(bright-set-dict "root" (concat (getenv "HOME") "/.rover/workspaces/penman/bretsmac2") "penman2")
+(bright-set-dict "htdocs" (concat apachedocroot "penman/bretsmac2") "penman2")
+
+(bright-set-dict "root" (concat (getenv "HOME") "/.rover/workspaces/aura_website/bretsmac") "aura_website")
+(bright-set-dict "htdocs" (concat apachedocroot "aura_website/bretsmac") "aura_website")
+
+(bright-set-dict "root" (concat (getenv "HOME") "/.rover/workspaces/penman/bretsmac3") "penman3")
+(bright-set-dict "htdocs" (concat apachedocroot "penman/bretsmac3") "penman3")
+(bright-set-dict "root" (concat (getenv "HOME") "/.rover/workspaces/penman/bretsmac4") "penman4")
+(bright-set-dict "htdocs" (concat apachedocroot "penman/bretsmac4") "penman4")
+(bright-set-dict "root" (concat (getenv "HOME") "/.rover/workspaces/knowledgefront/bretsmac") "knowledgefront")
+(bright-set-dict "root" (concat (getenv "HOME") "/.rover/workspaces/ccgcloud/bretsmac") "ccgcloud")
+(bright-set-dict "root" (concat (getenv "HOME") "/.rover/workspaces/ccgcloud/bretsmac2") "ccgcloud2")
+(bright-set-dict "htdocs" (concat apachedocroot "ccgcloud/bretsmac2") "ccgcloud2")
+(bright-set-dict "root" (concat (getenv "HOME") "/.rover/workspaces/vinca/bretsmac") "vinca")
+(bright-set-dict "root" (concat (getenv "HOME") "/.rover/workspaces/justculture/bretsmac") "justculture")
+(bright-set-dict "htdocs" (concat apachedocroot "justculture/justculture_com_replica") "justculture2")
+
+(bright-set-dict "root" (concat (getenv "HOME") "/.rover/workspaces/justculture/justculture_com_replica") "justculture2")
+(bright-set-dict "htdocs" (concat apachedocroot "justculture/justculture_com_replica") "justculture2")
+(bright-set-dict "htdocs" (concat apachedocroot "vinca/bretsmac") "vinca")
 
 (defun shell-with-command (name command accesskey)
   "Run a shell buffer with name ; and execute command with init"
@@ -88,8 +111,8 @@
   (pop-to-buffer name)
   (insert command)
   (condition-case nil
-	  (comint-send-input)
-	((debug error) nil))
+      (comint-send-input)
+    ((debug error) nil))
   )
 
 (defun use (&optional s &optional r)
@@ -105,20 +128,19 @@
       t
     (setq rails-env server))
   (setq rover-env server)
-  (setq rover-base-path (get_env "root" server))
-  (setq htdocs-base-path (get_env "htdocs" server))
-  (setq server-base-path (get_env "root" rails-env))
+  (setq rover-base-path (bright-fetch-dict "root" server))
+  (setq htdocs-base-path (bright-fetch-dict "htdocs" server))
+  (setq server-base-path (bright-fetch-dict "root" rails-env))
   (rails-start server rails-env)
   )
 
 (defun rails-start (server rails-env)
   "Begin a rails interactive environment"
-  (interactive)
-  (if (get_env "root" server)
-	  (setq rover-base-path (get_env "root" server))
-	(setq rover-base-path (concat "~/.rover/workspaces/" (getenv "ROVERENV") "/" server)))
+  (if (bright-fetch-dict "root" server)
+      (setq rover-base-path (bright-fetch-dict "root" server))
+    (setq rover-base-path (concat "~/.rover/workspaces/" (getenv "ROVERENV") "/" server)))
   (setq default-directory rover-base-path)
-  (setq htdocs-base-path (get_env "htdocs" server))
+  (setq htdocs-base-path (bright-fetch-dict "htdocs" server))
   (shell-with-command (concat rails-env "-sql") (concat "cd " server-base-path "; rails db") "S")
   (shell-with-command (concat rails-env "-server") (concat "cd " server-base-path "; rails s") "s")
   (shell-with-command (concat rails-env "-console") (concat "cd " server-base-path "; rails c") "c")
@@ -131,59 +153,51 @@
 (defun rails-pop-tobuffer (buff)
   (interactive)
   ;;
-
-  (setq foo (current-buffer))
-  (delete-other-windows)
+  ;; (setq foo (current-buffer))
+  ;; (delete-other-windows)
   (pop-to-buffer buff)
-  (switch-to-buffer-other-window foo)
-  (other-window 1)
+  ;; (switch-to-buffer-other-window foo)
+  ;; (other-window 1)
+  (end-of-buffer)
+  (comint-previous-input 1)
   )
 
 (defun go-to-server ()
   (interactive)
   ""
   (rails-pop-tobuffer (concat rails-env "-server"))
-  (end-of-buffer)
-  (comint-previous-input 1)
-)
+  )
 
 (defun go-to-htdocs ()
   (interactive)
   ""
   (rails-pop-tobuffer (concat rover-env "-htdocs"))
-  (end-of-buffer)
-  (comint-previous-input 1)
-)
+  )
 
 
 (defun go-to-shell ()
   (interactive)
   ""
   (rails-pop-tobuffer (concat rover-env "-shell"))
-  (end-of-buffer)
-  (comint-previous-input 1)
   )
 
 (defun go-to-console ()
   (interactive)
   ""
-  (if (get-buffer "*rails*")
-    (rails-pop-tobuffer (get-buffer "*rails*"))
-    (rails-pop-tobuffer (concat rails-env "-console")))
-  (end-of-buffer)
-  (comint-previous-input 1)
-)
+  (rails-pop-tobuffer (concat rails-env "-console")  )
+  ;; (if (get-buffer "*rails*")
+  ;;     (rails-pop-tobuffer (get-buffer "*rails*"))
+  ;;   (rails-pop-tobuffer (concat rails-env "-console")))
+  )
 
 (defun go-to-sql ()
   (interactive)
   ""
   (rails-pop-tobuffer (concat rails-env "-sql"))
-  (end-of-buffer)
-  (comint-previous-input 1)
   (concat rails-env "-sql")
   (message "%s" (concat rails-env "-sql"))
 
-)
+  )
 
 (defun go-home ()
   (interactive)
@@ -234,12 +248,15 @@
   (find-file-other-window (concat rover-base-path "/db/migrate") t)
   )
 
-(defun rails-find ()       ; Interactive version.                                                                              
-  "rails-find"
-  (interactive)
-  (setq text (read-from-minibuffer "Search text? "))
-  (find-name-dired (concat rover-base-path "/app") (concat "*" text "*"))
-)
+;; doesn't work
+
+;; (defun rails-find ()       ; Interactive version.                                                                              
+;;   "rails-find"
+;;   (interactive)
+;;   (setq text (read-from-minibuffer "Search text? "))
+;;   (find-name-dired (concat rover-base-path "/app") (concat "*" text "*"))
+;;   )
+;; (global-set-key "f" (quote rails-find))
 
 (global-set-key "s" (quote go-to-server))
 (global-set-key "H" (quote go-to-htdocs))
@@ -255,7 +272,7 @@
 (global-set-key "h" (quote go-home))
 (global-set-key "o" (quote get-project-org-file))
 (global-set-key "d" (quote go-to-db-migrate))
-(global-set-key "f" (quote rails-find))
+
 
 (global-set-key "C" (quote go-to-shell))
 
@@ -263,27 +280,27 @@
   (interactive)
   ""
   (find-file-other-window "~/bash_profiles/bdw/emacs/rails.el" t)
-)
+  )
 
 ;; (global-set-key "l" (quote edit-this-file))
 
 (fset 'last-shell-command
-   [?\C-x ?4 ?b ?* ?s ?h ?e ?l ?l ?* return escape ?> return ?! ?! return])
+      [?\C-x ?4 ?b ?* ?s ?h ?e ?l ?l ?* return escape ?> return ?! ?! return])
 
 (global-set-key (quote [3 f4]) (quote last-shell-command))
 
 (setq ruby-deep-indent-paren nil)
 
 
-    ;; def open(*args)
-    ;;   url = server_url
-    ;;   if args[0] && arg1 = args.shift[:arg1]
-    ;;     if arg1.match /^bright/
-    ;;       url += "/wp-admin/admin.php?page=#{arg1}"
-    ;;     end
-    ;;   end
+;; def open(*args)
+;;   url = server_url
+;;   if args[0] && arg1 = args.shift[:arg1]
+;;     if arg1.match /^bright/
+;;       url += "/wp-admin/admin.php?page=#{arg1}"
+;;     end
+;;   end
 
-    ;;   system('open -a /Applications/Google\ Chrome.app ' + url)
+;;   system('open -a /Applications/Google\ Chrome.app ' + url)
 ;; end
 
 
@@ -291,8 +308,8 @@
 
 ;; (shell-command "open -a /Applications/Google\ Chrome.app")
 
-; (setq browse-url-browser-function 'browse-url-chromium)
+					; (setq browse-url-browser-function 'browse-url-chromium)
 
-; (setq browse-url-browser-function nil)
+					; (setq browse-url-browser-function nil)
 
-; (browse-url "localhost:3000")
+					; (browse-url "localhost:3000")

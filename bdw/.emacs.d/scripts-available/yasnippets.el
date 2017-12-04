@@ -1,4 +1,4 @@
-(when (fboundp 'yasnippet)
+(when (package-installed-p 'yasnippet)
   
   (setq yas-snippet-dirs
 	'("~/.emacs.d/snippets"                 ;; personal snippets

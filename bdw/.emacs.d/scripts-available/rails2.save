@@ -1,0 +1,8 @@
+(defun Bright-pop-to-buffer(buffer-title &optional command-list)
+  (if (get-buffer buffer-title) ;; buffer already exists
+      (progn
+	(pop-to-buffer buffer-title) ;;; we are in an existing buffer
+	(end-of-buffer)
+	)
+    (shell buffer-title))
+  (Bright-run-commands command-list))  

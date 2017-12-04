@@ -1,0 +1,1 @@
+../scripts-available/magit.el

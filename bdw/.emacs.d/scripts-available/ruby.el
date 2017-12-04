@@ -2,8 +2,12 @@
 
 ;;  (require 'highlight-indentation)
 
-(setq highlight-indent-guides-method 'character)
+;; (setq highlight-indent-guides-method 'character)
 
+;; 'fill is the default
+;; (setq highlight-indent-guides-method 'fill)
+
+;; https://github.com/DarthFennec/highlight-indent-guides
 (add-hook 'enh-ruby-mode-hook
 	  'highlight-indent-guides-mode)
 

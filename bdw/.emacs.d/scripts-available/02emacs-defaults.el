@@ -19,3 +19,7 @@
 (setq mac-option-modifier  'hyper)
 (setq mac-command-modifier 'meta)
 
+(global-set-key (kbd "C-c k") 'compile)
+
+;; i like my registers to save between sessions
+(desktop-save-mode)
