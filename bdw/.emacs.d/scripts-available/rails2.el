@@ -1,4 +1,4 @@
-
+(require 'ido)
 (eval-when-compile (require 'subr-x))
 
 (setq Bright-dict (make-hash-table :test 'equal))
@@ -42,12 +42,14 @@
 
 ;;
 (defun Bright-ido-assoc (assoc-list &optional prompt)
-  "Prompt [or take a prompt] to select from an assoc list, and return the result"
+  "Prompt [or take a prompt] to select from an assoc list, and return the result
+\(fn ASSOC-LIST &optional PROMPT)
+"
   (cdr (assoc (ido-completing-read
 	       (or prompt
 		   "Pick one? ")
 	       (sort (mapcar 'car assoc-list) 'string<))
-			  assoc-list)))
+	      assoc-list)))
 
 (defun Bright-full-setup (env &optional rails-env)
   (let ((rails-env (or rails-env
@@ -57,14 +59,8 @@
     (Bright-set-dict env "htdocs" (concat apachedocroot env))
     (Bright-set-dict env "railsroot" (cdr (assoc rails-env Bright-rails-list)))))
 
-(defun Bright-simple-setup (env &optional rails-env)
-  (Bright-full-setup (concat env "/" "bretsmac") rails-env))
-
-(mapcar (lambda(env)
-	  (Bright-simple-setup env))
-	'("ncmm" "fishnick" "careofskills"))
-
-(Bright-simple-setup "fin3" "fin3")
+(defun Bright-simple-setup (env &optional env-name &optional rails-env)
+  (Bright-full-setup (concat env "/" (or env-name "bretsmac")) rails-env))
 
 (defun Bright-use (&optional env)
   (interactive)
@@ -77,16 +73,14 @@
 	      (global-set-key (kbd (concat "C-c " key))
 			      (lambda ()
 				(interactive)
-				(Bright-start name t)))))
-	  '(
-	    ("S" . "sql")
+				(Bright-start name)))))
+	  '(("S" . "sql")
 	    ("c" . "console")
 	    ("s" . "server")
 	    ("r" . "rover")
 	    ("R" . "railshell")
 	    ("H" . "htdocs")
-	    ("C" . "shell")
-	    ))
+	    ("C" . "shell")))
   Bright-env-in-use)
 
 (defun Bright-get-env-in-use ()
@@ -111,14 +105,6 @@ different environments.
       (concat (Bright-fetch-dict "rails-env" Bright-env-in-use) "-" title)
     (concat env "-" title)))
 
-(defun Bright-pop-to-buffer(buffer-title &optional command-list)
-  (if (get-buffer buffer-title) ;; buffer already exists
-      (progn
-	(pop-to-buffer buffer-title) ;;; we are in an existing buffer
-	(end-of-buffer)
-	)
-    (shell buffer-title))
-  (Bright-run-commands command-list))  
 
 (defun Bright-shell-with-command(title command-list do-commands)
   "Create (or pop-to) a buffer, execute a set of commands (if set), and define a hot key
@@ -145,25 +131,66 @@ to pop to it [also if set]"
 			      ("htdocs"    . "htdocs")
 			      ))
 
+(defun Bright-shell-root(shell-type)
+  "Return the root directory of this type of shell
+
+\(fn SHELL-TYPE)
+"
+  (if (equal shell-type "rover")
+      (concat Bright-user-home "/dev/gitlab/aura-rover-config" )
+    (gethash (cdr (assoc shell-type Bright-shell-type-env)) (Bright-get-nested-hash (Bright-get-env-in-use)))
+    ))
+
+
 (setq Bright-additional-shell-commands
       (make-hash-table :test 'equal))
 
 (puthash "sql" '("PAGER=cat rails db") Bright-additional-shell-commands)
 (puthash "server" '("rails s") Bright-additional-shell-commands)
 (puthash "console" '("rails c") Bright-additional-shell-commands)
+					; (puthash "rover" list(concat("eval $(r " ))
 
-(gethash (cdr (assoc "sql" Bright-shell-type-env)) (Bright-get-nested-hash (Bright-get-env-in-use)))
+(defun Bright-get-additional-commands-for-rover ()
+  "Extensions for Rover shell type.  Must return a list"
+  (list
+   (concat "eval $(r " (Bright-get-env-in-use) ")")
+   "rake wordpress:open"
+   "rake wordpress:config"
+   )
+  )
+
+(defun Bright-get-additional-commands (shell-type)
+  "Fetch additional commands for a specific shell type.
+
+\(fn SHELL-TYPE)"
+  (let ((extension-function (intern (concat "Bright-get-additional-commands-for-" shell-type))))
+    (append (gethash shell-type Bright-additional-shell-commands)
+	    (if (functionp extension-function)
+		(funcall (symbol-function extension-function))))))
+
 
 (defun Bright-get-command-list (shell-type)
-  (let ((command-list (list
-		       (concat "cd "
-			       (gethash (cdr (assoc shell-type Bright-shell-type-env)) (Bright-get-nested-hash (Bright-get-env-in-use))))
-		       ". .localenv"
-		       )))
-    (append command-list (gethash shell-type Bright-additional-shell-commands))))
+  (append (list
+   (concat "cd " (Bright-shell-root  shell-type))
+   ". .localenv")
+	  (Bright-get-additional-commands shell-type)))
 
 
-(defun Bright-start (shell-type do-commands)
+(defun Bright-start (shell-type &optional do-commands)
   "Takes an argument of the shell type to start"
   (Bright-shell-with-command shell-type (Bright-get-command-list shell-type) do-commands) ; nil -> access_key
   )
+
+;;
+
+;; local setup
+
+(mapcar (lambda(env)
+	  (Bright-simple-setup env))
+	'("ncmm" "fishnick" "careofskills" "medtronic"))
+
+(Bright-simple-setup "fin3" "bretsmac" "fin3")
+(Bright-simple-setup "penman" "bretsmac4")
+
+(Bright-start "rover" t)
+
