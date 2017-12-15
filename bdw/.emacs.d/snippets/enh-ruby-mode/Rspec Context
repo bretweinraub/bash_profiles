@@ -1,0 +1,6 @@
+# key: rsc
+# name: Rspec Context
+# --
+  context "$1" do
+    
+  end

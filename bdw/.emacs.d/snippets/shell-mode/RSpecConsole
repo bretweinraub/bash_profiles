@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Proc.new {ActiveRecord::Base.logger = Logger.new(STDOUT) ; RSpecConsole.run "spec/models/datum_spec.rb"}.call
+# key: RSpecConsole
+# --
+Proc.new {ActiveRecord::Base.logger = Logger.new(STDOUT) ; RSpecConsole.run "spec/$0"}.call

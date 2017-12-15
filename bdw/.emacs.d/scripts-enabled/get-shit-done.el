@@ -39,12 +39,12 @@ Argument 2 is a key spec, a list of cons pairs of format
 			      ))))
 	key-spec))
 
-(Gitlab-build-ur
+(Gitlab-build-urls
  (list
   (list "bretweinraub" "bdw" "fin3" "bash_profiles" "sales")
   (list "aura" "BrightSettings" "alexion" "aura-bright-child-theme" "aur-bright-login-box-plugin" "aura-bright-multisite-search" 
 	"aura-bright-multisite-setup" "aura-di" "aura-docs" "aura-extensions" "aura-quote" "aura-rover-config" "aura-scorm-course-uploader"
-	"aura-scripts" "aura-site" "aura-store" "aura-website" "aura_dashboard" "aura_dashboard_app" "aura_dashboard_sample" "aura_visualize"
+	"aura-scripts" "aura-site" "aura-store" "aura-website" "aura_dashboard" "aura_dashboard_app" "aura_dashboard_sample" "aura_meteor" "aura_visualize"
 	"aurawww-apacheconfig" "bright" "bright-backbone-experiments" "bright-bright-customizations" "bright-divi-child" "bright-editor"
 	"bright-hover-launchers" "bright-network-blogdumps" "bright-overreact" "bright-simple-ui.js" "bright-telegram-client"
 	"bright_app" "bright_ci" "brookings" "brookings-gap" "careofskills-bright-customizations" "ccgcloud-bright-customizations"
@@ -55,7 +55,7 @@ Argument 2 is a key spec, a list of cons pairs of format
 	"medtronic-brightapp-extensions" "medtronic-network-theme" "medtronic_auto_open" "mma-brightapp-extensions"
 	"ncmm-bright-customizations" "ncmm-survey-quizzage-generator" "ncmm-theme" "neuro-bright-customizations"
 	"oe-magnium-child" "oe-rca-server" "oe-scroller-child" "overreact" "qna" "rails_sql_views" "restore_courses"
-	"rover" "rover-mma" "scorm-cloud" "scorm_cloud_ftp" "scormcloud_archive" "scroller"
+	"rover" "rover-mma" "scorm-cloud" "scorm_cloud-api" "scorm_cloud_ftp" "scormcloud_archive" "scroller"
 	"silverbullet-bright-customizations" "slimtimer4trac" "st-bright-customizations" "tensentric-scripts"
 	"toggl-button" "usada-storefront-child-theme" "vinca-bright-customizations" "wedocs-aura-child"
 	"wordpress_hooks" "wp-advanced-taxonomy-terms-order" "wp-aura-edudip" "wp-aura-social-connect"
@@ -73,8 +73,12 @@ Argument 2 is a key spec, a list of cons pairs of format
 	"yogau-paypal"))
  '(
    ("issues" . "i")
+   ("issues/new" . "n")
    ("". "r")
    ("boards" . "b")
+   ("activity" . "a")
+   ("settings/repository" . "R")
+   ("commits/master" . "c")
    ))
      
 

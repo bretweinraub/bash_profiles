@@ -2,6 +2,14 @@
 
 (setq web-docs
       '(
+	("UBS Personal Login" .
+	 "https://ebanking-ch2.ubs.com/workbench/WorkbenchOpenAction.do?login&isiwebuserid=11577856&goTo=challengeResponse&NavLB_EBCH=1495811740"
+	 )
+	("UBS Spreadie" .
+	 "https://docs.google.com/spreadsheets/d/1sj74zChZKqyhDtROJOF7TmwwLTBxm_WgpmCVZoFp3Gg/edit#gid=0")
+	("WebSite Brief Questionnaire / Discovery Document" .
+	 "https://docs.google.com/document/d/1jDO_T9EfU9KDnJQqGnPXl3P0CsLX-nvquy1rjLt8uAE/edit"
+	 )
 	("Ruby Refactor Mode" .
 	 "https://github.com/ajvargo/ruby-refactor")
 	("Setuid Setgid sticky bit" . "https://www.thegeekdiary.com/what-is-suid-sgid-and-sticky-bit/")
@@ -47,7 +55,7 @@
 	 )
 	(
 	 "Ckuru Tools" .
-	 "http://trac.aura-software.com/aura/wiki/CkuruTools")
+	 "https://engineering.aura-software.com/2017/04/13/ckurutools-helpers/")
 	("AR Billable Accounts Information Collections" .
 	 "https://docs.google.com/spreadsheets/d/1ifzU6ppBjDOdou2xN793vBzPqwBlZoO8QnRWqMPNwCI/edit#gid=0"
 	 )
@@ -58,21 +66,21 @@
 	 )
 	("GitLab Markdown" .
 	 "https://gitlab.com/gitlab-org/gitlab-ce/blob/master/doc/user/markdown.md")
-	))
-
+	("Ruby % Commands" .
+	 "https://simpleror.wordpress.com/2009/03/15/q-q-w-w-x-r-s/")
+	("Ruby Quick Reference" .
+	 "http://www.zenspider.com/ruby/quickref.html#table-of-contents"	 
+	 )
+	)
+      )
+      
 (defun goto-web-doc () 
   "Use ido mode to search an alist, and then go to the selected item in the
 browser" 
   (interactive) 
   (browse-url (cdr (assoc (ido-completing-read "Pick a web doc? " (sort (mapcar 'car web-docs) 'string<))
 			  web-docs)
-		   ))) 
+		   )))
+
 
 (global-set-key [3 103] (quote goto-web-doc))
-
-
-
-
-
-
-

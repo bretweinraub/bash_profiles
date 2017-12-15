@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Rspec It
+# key: it 
+# --
+it "$1" do
+  $0
+end

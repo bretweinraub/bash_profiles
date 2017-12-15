@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Rspec New File 
+# key:  rsf
+# --
+RSpec.describe $0 do
+end

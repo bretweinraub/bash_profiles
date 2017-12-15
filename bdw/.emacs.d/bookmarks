@@ -1,0 +1,32 @@
+;;;; Emacs Bookmark Format Version 1 ;;;;
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("README.md.wp"
+ (filename . "~/.rover/workspaces/aurabright/bretsmac/bright-rails5/bright-api-doc/README.md.wp")
+ (front-context-string . "# Bright V2 API ")
+ (rear-context-string)
+ (position . 1))
+("web-bookmarks.el"
+ (filename . "~/bash_profiles/bdw/.emacs.d/contrib/web-bookmarks.el")
+ (front-context-string . ";; emacs\n(setq w")
+ (rear-context-string . "spec-matchers)\n\n")
+ (position . 126))
+("rails.el"
+ (filename . "~/bash_profiles/bdw/.emacs.d/scripts-available/rails.el")
+ (front-context-string . "\n\n(setq railshas")
+ (rear-context-string)
+ (position . 1))
+("init.el"
+ (filename . "~/bash_profiles/bdw/.emacs.d/init.el")
+ (front-context-string . "(if (fboundp 'me")
+ (rear-context-string . "mentary display\n")
+ (position . 140))
+("bookmarks"
+ (front-context-string . "“Bookmarks” are ")
+ (rear-context-string . "==============\n\n")
+ (position . 245612)
+ (filename . "/usr/local/Cellar/emacs/25.3/share/info/emacs/emacs")
+ (info-node . "Bookmarks")
+ (handler . Info-bookmark-jump))
+)

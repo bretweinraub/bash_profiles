@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: ruby-def-with-ckuru-tools-params
+# key: ctd
+# --
+  def $1(h={})
+    $2,$3 = CkuruTools.only_these_parameters(h,
+                                             [:$2,{respond_to: }], # required: ,default: 
+                                             [:$3,{respond_to: }]  # instance_of:
+                                            )
+    $0					    
+  end					    

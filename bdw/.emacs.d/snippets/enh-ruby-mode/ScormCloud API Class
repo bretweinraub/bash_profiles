@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: ScormCloud API Class
+# key: scc
+# --
+module ScormCloud
+  class $1 < Api
+    include Service
+  end
+end
+

@@ -1,0 +1,7 @@
+# key: context
+# name: context
+# --
+context "$1" do
+let {$2}
+$0
+end

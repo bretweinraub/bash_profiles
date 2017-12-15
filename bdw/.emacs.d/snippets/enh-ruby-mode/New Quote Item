@@ -1,0 +1,13 @@
+# key: qi
+# name: New Quote Item
+# --
+    quote_items.newItem(
+      functional_area: :$1,
+      topic_area: :$2,
+      name: '$3',
+      description: '$4',
+      recurrent_price: $5,
+      price: $6,
+      notes: '$7',
+      )
+

@@ -78,6 +78,8 @@
    (concat "https://www.google.com/search?q=" (buffer-substring (mark) (point)))
    ))
 
+(global-set-key (kbd "C-c C-a g") (symbol-function 'google-it))
+
 
 (defun open-library ()
   "Opens all sites necessary to work on a customer"

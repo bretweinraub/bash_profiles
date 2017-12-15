@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: hash-requirec
+# key: r
+# --
+    $1 = h.extract_required(:$1)
+$0

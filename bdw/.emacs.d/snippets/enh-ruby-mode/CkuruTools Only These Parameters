@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: CkuruTools Only These Parameters
+# key: cto
+# --
+  CkuruTools.only_these_parameters($1,
+                                [:$2,{instance_of: $3,required: $4,default: $5 }],
+                                )
+  $0

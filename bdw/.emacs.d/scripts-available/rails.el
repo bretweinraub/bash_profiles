@@ -159,7 +159,7 @@
   ;; (switch-to-buffer-other-window foo)
   ;; (other-window 1)
   (end-of-buffer)
-  (comint-previous-input 1)
+`  (comint-previous-input 1)
   )
 
 (defun go-to-server ()

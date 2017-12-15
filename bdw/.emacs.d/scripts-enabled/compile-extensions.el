@@ -11,7 +11,7 @@
   )
 
 
-(defun bdw-after-compile ()
+(defun bdw-after-compile (arg)
   (pop-to-buffer "*compilation*")
   (goto-char (point-max))
 ;;  (text-scale-set -1)

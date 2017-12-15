@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: hash extract
+# key: e
+# --
+    $1 = h.extract(:$1)
+$0

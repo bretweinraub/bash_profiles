@@ -404,30 +404,35 @@ rvmuse () {
 	fi
     fi
     gemsets=$(grep '@' < <(cd $rvmdir; find . -maxdepth 1 -type d )|sort)
-    set $gemsets
-    x=0
-    while [ $# -gt 0 ];do 
-	((x=$x+1))
-	echo $x"): "$1 >&2
+    if [ $# -gt 0 ]; then
+	echo $1
+	gemsets=$(echo $gemsets | tr " " "\n" | grep $1)
 	shift
-    done
-    read line
-    x=0
-    set $gemsets
-    while [ $# -gt 0 ];do 
-	((x=$x+1))
-	if [ "$line" = "$x" ]; then
+    fi
+    if [ -n "${gemsets}" ]; then
+	set $gemsets
+	x=0
+	while [ $# -gt 0 ];do 
+	    ((x=$x+1))
+	    echo $x"): "$1 >&2
+	    shift
+	done
+	read line
+	x=0
+	set $gemsets
+	while [ $# -gt 0 ];do 
+	    ((x=$x+1))
+	    if [ "$line" = "$x" ]; then
 		new=$(echo $1 | cut -d/ -f2-)
 		export RVMUSE=$new
-	    echo eval "rvm use "$new
-	    eval "rvm use "$new
-	fi
-	shift
-    done
-}
-
-hobo_wtf () {
-  $EDITOR $(find $(rvm gemdir)/gems/hobo* -iname '*.dryml' -exec grep 'filter-menu' {} + | cut -d: -f 1 | uniq)
+		echo eval "rvm use "$new
+		eval "rvm use "$new
+	    fi
+	    shift
+	done
+    else
+	echo "No matches"
+    fi
 }
 
 function gemdir {

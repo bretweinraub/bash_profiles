@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: rescue exception
+# key: __begin
+# --
+begin
+  # code here
+rescue Exception => e
+  require 'byebug'
+  byebug $0
+  raise e
+end

@@ -1,8 +1,9 @@
 
 
-(defun refactor-hash ()
+(defun Refactor-hash ()
   "convert old style ruby hash to new style ruby hash"
   (interactive)
+  (search-forward "=>")
   (search-backward ":")
   (delete-char 1)
   (search-forward-regexp " ")

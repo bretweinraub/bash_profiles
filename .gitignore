@@ -1,2 +1,6 @@
 *~
 *.DS_Store
+*/.emacs.d/.cask/
+*/.emacs.d/ac-comphist.dat
+.save-archives
+/bdw/.emacs.d/tramp

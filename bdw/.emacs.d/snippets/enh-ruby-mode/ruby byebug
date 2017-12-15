@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: ruby byebug
+# key: byebug
+# --
+require 'byebug'
+byebug $0 unless $continue
+1

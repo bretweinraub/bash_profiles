@@ -72,6 +72,68 @@
 	    ("C" . "shell")))
   Bright-env-in-use)
 
+;;;
+
+
+(defun Run-last-rspec-test()
+  ""
+  (interactive)
+  (save-current-buffer)
+  (pop-to-buffer "fin3-console")
+  (end-of-buffer)
+  ;; (if (not (comint-prompt-regexp "^[0-9]"))
+  ;;     (comint-send-input "!?rails"))
+  (comint-previous-matching-input "RSpec" 1)
+  (comint-send-input)
+  )
+
+(defun Railshell-last-rspec-test()
+  ""
+  (interactive)
+  (pop-to-buffer "fin3-railshell")
+  (comint-previous-matching-input "rspec" 1)
+  (comint-send-input)
+  )
+
+;;;
+
+(defun Make-last-rspec-command-an-expectation ()
+  "For use in Rspec.   Takes the last command run, and the output produced, and rewrites this as a RSpec expectation in the buffer 
+immediately above.
+
+TODO: instead of using buffer positions, we should instead be using a buffer-local-variable which is the rspec buffer target.
+
+It also would be possible to get the last rspec command out of the console with this:
+
+  (comint-previous-matching-input \"RSpec\" 1) ;; or something like that.
+
+For me this is
+
+Proc.new {RequireReloader.watch :aura_meteor ; ActiveRecord::Base.logger = Logger.new ( STDOUT ) ; CKURU_DEBUG_LEVEL=1 ; RSpecConsole.run \"spec/meteor/view_factory_spec.rb\"}.call
+
+Partse out the file name, turn it into a buffer name.   Or maybe just set a variable ;)
+
+"
+  (interactive)
+  (let ((last-command (comint-previous-input-string 0)))
+    (save-excursion
+      (previous-line 1)
+      (beginning-of-line)
+      (set-mark (point))
+      (end-of-line)
+      (kill-ring-save (mark) (point))
+      (windmove-up)
+      (insert "\n")
+      (insert "expect(" last-command ").to eq(")
+      (yank)
+      (insert ")")
+      (indent-for-tab-command)
+      (insert "\n")
+      (indent-for-tab-command)
+      (windmove-down)
+      )))
+
+
 (defun Bright-get-env-in-use ()
   "Returns the Bright Env in Use, or prompts the user to select one"
   (if (and (boundp 'Bright-env-in-use)
@@ -83,8 +145,7 @@
   "Execute a series of commands in the current shell buffer"
   (mapcar (lambda (command)
 	    (insert command)
-	    (comint-send-input))
-	  command-list))
+	    (comint-send-input)) command-list))
 
 (defun Bright-get-buffer-title(title env)
   "Based on the env type, get the buffer title.   For Rails, we are going to re-use buffers for 
@@ -108,9 +169,7 @@ to pop to it [also if set]"
 	      (Bright-run-commands command-list)))
       (progn  ;;; buffer does not exist
 	(shell buffer-title)
-	(Bright-run-commands command-list)
-	))
-    ))
+	(Bright-run-commands command-list)))))
 
 (setq Bright-shell-type-env '(("sql"       . "railsroot")
 			      ("server"    . "railsroot")
@@ -167,8 +226,9 @@ to pop to it [also if set]"
 
 (defun Bright-get-command-list (shell-type)
   (append (list
-   (concat "cd " (Bright-shell-root  shell-type))
-   ". .localenv")
+	   (concat "mkdir -p " (Bright-shell-root  shell-type))
+	   (concat "cd " (Bright-shell-root  shell-type))
+	   ". .localenv")
 	  (Bright-get-additional-commands shell-type)))
 
 
@@ -198,3 +258,10 @@ to pop to it [also if set]"
 (Bright-simple-setup "fin3" "bretsmac" "fin3")
 (Bright-simple-setup "justculture" "justculture_com_replica")
 (Bright-simple-setup "penman" "bretsmac4")
+(Bright-simple-setup "medtronic")
+
+(defun use ()
+  "facade for Bright-use"
+  (interactive)
+  (Bright-use)
+  )
