@@ -501,27 +501,23 @@ if [ -d $HOME/trac ] ; then
 	export PATH=$PATH:$HOME/trac
 fi
 
-trac () {
-	$HOME/trac/trac_curl.rb $* 
-}
-
-git-branch () {
+Branch () {
 	git rev-parse --abbrev-ref HEAD
 }
 
-git-push () {
+Push () {
     remotes=$(git remote -v |grep '(push)'|awk '{print $1}')
     for remote in $remotes; do
-        echo pushing to $(git-branch) on $remote
-        git push $remote $(git-branch)
+        echo pushing to $(Branch) on $remote
+        git push $remote $(Branch)
     done
 }
 
-git-clone () {
+Clone () {
     git clone git@code.aura-software.com:aura/$1.git
 }
 
-git-pull () {
+Pull () {
     remotes=$(git remote -v |grep '(push)'|awk '{print $1}')
     for remote in $remotes; do
         echo pulling from $(git-branch) on $remote
@@ -535,10 +531,6 @@ SourceTree () {
   open -a SourceTree $(pwd)
 }
 
-
-aura-clone () {
-  git clone git@bitbucket.org:aura_software/$1.git
-}
 
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
