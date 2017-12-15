@@ -8,9 +8,9 @@
 (defun bdw-after-rspec-verify ()
   (pop-to-buffer "*rspec-compilation*")
   (goto-char (point-max))
-;;  (text-scale-set -1)
+  ;;  (text-scale-set -1)
   )
 
 (if (fboundp 'add-function)
     (add-function :after (symbol-function 'rspec-verify) #'bdw-after-rspec-verify)
-  (message "message in rspec-mode-settings.el add_function() not found")
+  (message "message in rspec-mode-settings.el add_function() not found"))
