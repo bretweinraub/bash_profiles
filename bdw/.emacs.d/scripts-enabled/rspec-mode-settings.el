@@ -11,5 +11,6 @@
 ;;  (text-scale-set -1)
   )
 
-
-(add-function :after (symbol-function 'rspec-verify) #'bdw-after-rspec-verify)
+(if (fboundp 'add-function)
+    (add-function :after (symbol-function 'rspec-verify) #'bdw-after-rspec-verify)
+  (message "message in rspec-mode-settings.el add_function() not found")
